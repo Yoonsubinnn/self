@@ -9,5 +9,12 @@ public interface MemberService {
 	int findPwd(Member m);
 
 	int changePwd(Member m);
+	
+	int insertMember(Member m);
 
+	int checkId(String id);
+
+	int checkNick(String nickName);
+
+//	ArrayList<Member> findId(Member m);
 }

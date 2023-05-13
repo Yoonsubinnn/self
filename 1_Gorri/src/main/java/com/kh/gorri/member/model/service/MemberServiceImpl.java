@@ -30,4 +30,29 @@ public class MemberServiceImpl implements MemberService {
 	public int changePwd(Member m) {
 		return mDAO.changePwd(sqlSession,m);
 	}
+	
+	//-------------------------------------------보서)회원가입 구현 2023.05.12
+	@Override
+	public int insertMember(Member m) {
+		return mDAO.insertMember(sqlSession, m);
+	}
+	
+	//보서)아이디 중복 구현 2023.05.12
+	@Override
+	public int checkId(String id) {
+		return mDAO.checkId(sqlSession, id);
+	}
+	
+	//보서)닉네임 중복 구현 2023.05.12
+	@Override
+	public int checkNick(String nickName) {
+		return mDAO.checkNick(sqlSession, nickName);
+	}
+	
+	//보서) 아이디 찾기 구현 2023.05.12
+//	@Override
+//	public ArrayList<Member> findId(Member m) {
+//		return mDAO.findId(sqlSession, m);
+//	}
+	
 }

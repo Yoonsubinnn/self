@@ -23,5 +23,22 @@ public class MemberDAO {
 	public int changePwd(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("memberMapper.changePwd", m);
 	}
+	
+	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.insert("memberMapper.insertMember", m);
+	}
+
+	public int checkId(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.selectOne("memberMapper.checkId", id);
+	}
+
+	public int checkNick(SqlSessionTemplate sqlSession, String nickName) {
+		return sqlSession.selectOne("memberMapper.checkNick", nickName);
+	}
+
+//	public ArrayList<Member> findId(SqlSessionTemplate sqlSession, Member m) {
+//		return sqlSession.selectList("memberMapper.findId", m);
+//	}
+	
 
 }

@@ -1,10 +1,13 @@
 package com.kh.gorri.member.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -18,6 +21,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService mService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bcrypt;
 	
 	@RequestMapping(value="login.me")
 	public String login() {
@@ -48,25 +54,63 @@ public class MemberController {
 		return "updateMyInfo";
 	}
 	
-	@RequestMapping(value="join.me")
-	public String Join() {
+
+	//회원가입 : 보서 - 2023-05-12 23:08분 ----------------------------
+	@RequestMapping("insertMember.me")
+	public String insertMember() {
 		return "join";
 	}
 	
-	@RequestMapping(value="findId.me")
+	@RequestMapping("join.me")
+	public String Join(@ModelAttribute Member m) {
+		
+		String userPwd = bcrypt.encode(m.getUserPwd());
+		m.setUserPwd(userPwd);
+		
+		int result = mService.insertMember(m);
+		if(result > 0 ) {
+			return "redirect:login.me";
+		} else {
+			throw new MemberException("회원가입에 실패하셨습니다.");
+		}
+	}
+	
+	//보서 2023-05-12 : 아이디 중복 확인 
+	@RequestMapping("checkId.me") 
+	@ResponseBody
+	public String checkId(@RequestParam("id") String id) {
+		
+		int checkUid = mService.checkId(id);
+		String result = checkUid == 0 ? "yes" : "no";
+		return result;
+	}
+	
+	//보서 2023-05-12 : 닉네임 중복 확인
+	@RequestMapping("checkNick.me")
+	@ResponseBody
+	public String checkNick(@RequestParam("nickName") String nickName) {
+		
+		int checkNick = mService.checkNick(nickName);
+		String result = checkNick == 0 ? "yes" : "no";
+			
+		return result;
+		
+	}
+	
+	//보서 2023-05-12 : 아이디 찾기 
+	@RequestMapping("findId.me")
 	public String findId() {
 		return "findId";
 	}
 	
-	@RequestMapping(value="findPwd.me")
-	public String findPwd() {
-		return "findPwd";
+	@RequestMapping("findIdResult.me")
+	public String findIdResult(@ModelAttribute Member m, Model model) {
+//		
+//		Member user = mService.findId(m);
+//		System.out.println(user.getUserId());
+		return null; //뷰 이름 다시 해주기 join 도 ;
 	}
 	
-	@RequestMapping(value="findIdResult.me")
-	public String findIdResult() {
-		return "findIdResult";
-	}
 	
 	@RequestMapping(value="findPwdResult.me")
 	public String findPwdResult() {
