@@ -23,6 +23,7 @@
 		<result column="STATUS" property="status"/>
 		<result column="IS_ADMIN" property="isAdmin"/>		
 	</resultMap>
+	
 	<select id="findPwd" resultType="_int">
 		select count(*)
 		from users
@@ -31,6 +32,31 @@
 	
 	<update id="changePwd">
 		update users set pwd=#{userPwd} where users_id=#{userId}
-	
 	</update>
+	
+	<!-- 보서)회원가입 구현 : 2023-05-12 -->
+	<insert id="insertMember">
+		INSERT INTO USERS VALUES(#{userId}, #{userPwd}, #{pwdQ}, #{pwdHint}, #{userName}, #{address}, #{wallet}, SYSDATE, #{phone}, #{nickName}, #{myIntro}, default, default)
+	</insert>
+	
+	<!-- 보서) 아이디 중복 구현 : 2023-05.12 -->
+	<select id="checkId" resultType="_int">
+		select count(*)
+		from users
+		where users_id=#{userId} and status='Y'
+	</select>
+	
+	<!-- 보서) 닉네임 중복 구현 : 2023-05.12 -->
+	<select id="checkNick" resultType="_int">
+		select count(*)
+		from users
+		where nickname=#{nickName} and status='Y'
+	</select>
+	
+	<!-- 보서) 아이디 찾기 구현 : 2023-05-12 -->
+	<select id="findId" resultMap ="memberResultSet">
+		select *
+		from users
+		where name= '#{userName}' and phone=#{phone}
+	</select>
 </mapper>
