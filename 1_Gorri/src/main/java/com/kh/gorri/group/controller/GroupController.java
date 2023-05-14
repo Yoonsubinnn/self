@@ -2,9 +2,12 @@ package com.kh.gorri.group.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.gorri.group.model.service.GroupService;
+import com.kh.gorri.group.model.vo.Group;
 
 @Controller
 public class GroupController {
@@ -56,5 +59,13 @@ public class GroupController {
 	@RequestMapping(value="groupUpdate.gr")
 	public String groupUpdate() {
 		return "groupUpdate"; 
+	}
+	
+	@RequestMapping("insertGroup.gr")
+	public String insertGroup(@ModelAttribute Group g, Model model) {
+		System.out.println(g.getHostId());
+		System.out.println(g.getMembershipContent());
+		System.out.println(g.getMembershipName());
+		return "redirect:groupMain.gr";
 	}
 }
