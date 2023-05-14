@@ -5,7 +5,7 @@ public class Group {
 	private String membershipName;
 	private String membershipContent;
 	private int capacity;
-	private String membership_status;
+	private String membershipStatus;
 	private String hostPhone;
 	private String category;
 	private String hostId;
@@ -13,13 +13,13 @@ public class Group {
 	public Group() {}
 
 	public Group(int membershipNo, String membershipName, String membershipContent, int capacity,
-			String membership_status, String hostPhone, String category, String hostId) {
+			String membershipStatus, String hostPhone, String category, String hostId) {
 		super();
 		this.membershipNo = membershipNo;
 		this.membershipName = membershipName;
 		this.membershipContent = membershipContent;
 		this.capacity = capacity;
-		this.membership_status = membership_status;
+		this.membershipStatus = membershipStatus;
 		this.hostPhone = hostPhone;
 		this.category = category;
 		this.hostId = hostId;
@@ -57,12 +57,12 @@ public class Group {
 		this.capacity = capacity;
 	}
 
-	public String getMembership_status() {
-		return membership_status;
+	public String getMembershipStatus() {
+		return membershipStatus;
 	}
 
-	public void setMembership_status(String membership_status) {
-		this.membership_status = membership_status;
+	public void setMembership_status(String membershipStatus) {
+		this.membershipStatus = membershipStatus;
 	}
 
 	public String getHostPhone() {
@@ -92,7 +92,7 @@ public class Group {
 	@Override
 	public String toString() {
 		return "Group [membershipNo=" + membershipNo + ", membershipName=" + membershipName + ", membershipContent="
-				+ membershipContent + ", capacity=" + capacity + ", membership_status=" + membership_status
+				+ membershipContent + ", capacity=" + capacity + ", membership_status=" + membershipStatus
 				+ ", hostPhone=" + hostPhone + ", category=" + category + ", hostId=" + hostId + "]";
 	}
 	

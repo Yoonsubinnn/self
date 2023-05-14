@@ -60,14 +60,15 @@
 
 <div class="aligncenterhae" style="height:800px; width:1000px; border:2px solid #ffab00; margin-left:auto; margin-right:auto; border-radius:2em; padding:90px;">
 	<!-- 모임이름, 카테고리 -->
-	<form action="${ contextPath }/insertGroup.gr">
+	<form action="${ contextPath }/insertGroup.gr" method="post" enctype="multipart/form-data">
 		<table style="text-align:left;">
 			<tr>
 				<td rowspan="2">
 					<div class="groupPic" style="border-radius:2em; border:3px solid #ffab00">
-						<input type="file" style="display:none;" id="groupReprePic" name="groupPic">
+						<input type="file" class="form-control form-control-lg" name="file">
+						
 					</div>
-					<div class="showPic" style="display:none;">
+					<div class="showPic" style="display:none;" required>
 					
 					</div>
 				</td>
@@ -123,7 +124,7 @@
 			</table>
 		</div>
 		<br><br>
-		<button class="button" style="50px;"><b>가입하기</button>
+		<button type="submit" class="button" style="50px;"><b>가입하기</button>
 	</form>
 </div>	
 
