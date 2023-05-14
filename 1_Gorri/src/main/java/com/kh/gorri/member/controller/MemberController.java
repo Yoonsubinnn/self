@@ -56,16 +56,18 @@ public class MemberController {
 	
 
 	//회원가입 : 보서 - 2023-05-12 23:08분 ----------------------------
-	@RequestMapping("insertMember.me")
-	public String insertMember() {
+	@RequestMapping("join.me")
+	public String join() {
 		return "join";
 	}
 	
-	@RequestMapping("join.me")
-	public String Join(@ModelAttribute Member m) {
+	@RequestMapping("insertMember.me")
+	public String insertMember(@ModelAttribute Member m) {
 		
 		String userPwd = bcrypt.encode(m.getUserPwd());
 		m.setUserPwd(userPwd);
+		System.out.println(m.getUserName());
+		System.out.println(userPwd);
 		
 		int result = mService.insertMember(m);
 		if(result > 0 ) {

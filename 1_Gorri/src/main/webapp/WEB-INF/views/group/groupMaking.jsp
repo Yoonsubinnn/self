@@ -62,7 +62,14 @@
 	<!-- 모임이름, 카테고리 -->
 	<table style="text-align:left;">
 		<tr>
-			<td rowspan="2"><div class="groupPic" style="border-radius:2em;"> 모임 사진</div></td>
+			<td rowspan="2">
+				<div class="groupPic" style="border-radius:2em;">
+					<input type="file" style="display:none;" id="groupReprePic" name="groupPic">
+				</div>
+				<div class="showPic" style="display:none;">
+				
+				</div>
+			</td>
 			<td class="tdtwwo">모임 이름</td>
 			<td><input class="form-control me-2" aria-label="Search" style="width:200px; border: 1px solid gray;"></td>
 		</tr>
@@ -87,27 +94,26 @@
 	
 	<br><hr>
 	
-	<table>
-		<tr>
-			<td colspan="6" class="tdtwwo" style="height:70px; text-align:left;"> 개설자 정보</td>
-		</tr>
-		
-		<tr style="text-align:left;">
-			<td class="tdtwwo" style="height:50px; weight:10px; font-size:20px">이름</td>
-			<td><input class="form-control me-2" aria-label="Search" placeholder="이름 입력" style="width:170px; border: 1px solid gray;"></td>
-			<td class="tdtwwo" style="padding-left:8px; height:50px; weight:10px; font-size:20px">연락처</td>
-			<td><input class="form-control me-2" aria-label="Search" placeholder="연락처 입력" style="width:170px; border: 1px solid gray;"></td>
-			<td class="tdtwwo"  style="padding-left:8px; height:50px; weight:10px; font-size:20px">이메일</td>
-			<td><input class="form-control me-2" aria-label="Search" placeholder="이메일 입력" style="width:170px; border: 1px solid gray;"></td>
-		</tr>
-		<tr style="height:100px; padding-top:20px">
-			<td colspan="6" class="tdtwwo">모임 한줄 소개</td>
-		</tr>
-		<tr style="padding-top:10px">
-			<td colspan="6"><input class="form-control me-2" aria-label="Search" placeholder="모임 한줄 소개" style="width:100%; border: 1px solid lightgrey;"></td>
-		</tr>
-	</table>
-	
+	<div align="center">
+		<table style="border:1px black solid; border-collapse:collapse;">
+			<tr>
+				<td colspan="6" class="tdtwwo" style="height:70px; text-align:left;"> 개설자 정보</td>
+			</tr>
+			
+			<tr style="text-align:left;">
+				<td class="tdtwwo" style="height:50px; weight:10px; font-size:20px">이름</td>
+				<td><input class="form-control me-2" aria-label="Search" placeholder="이름 입력" style="width:170px; border: 1px solid gray;"></td>
+				<td class="tdtwwo" style="padding-left:8px; height:50px; weight:10px; font-size:20px">연락처</td>
+				<td><input class="form-control me-2" aria-label="Search" placeholder="연락처 입력" style="width:170px; border: 1px solid gray;"></td>
+			</tr>
+			<tr style="height:100px; padding-top:20px">
+				<td colspan="6" class="tdtwwo">모임 한줄 소개</td>
+			</tr>
+			<tr style="padding-top:10px">
+				<td colspan="6"><input class="form-control me-2" aria-label="Search" placeholder="모임 한줄 소개" style="width:100%; border: 1px solid lightgrey;"></td>
+			</tr>
+		</table>
+	</div>
 	<br><br>
 	<button class="button" style="50px;"><b>가입하기</button>
 	
