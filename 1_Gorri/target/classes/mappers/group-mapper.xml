@@ -13,4 +13,44 @@
 		insert into member values (#{memberId}, seq_membership.currval, #{grade}, sysdate, default )
 	</insert>
 	
+	<select id="getListCount" resultType="_int">
+		select count(*)
+		from membership
+	</select>
+	
+	<select id="selectGroupList" resultMap="groupResultSet">
+		select *
+		from membership
+		order by membership_no desc
+	</select>
+	
+	<resultMap type="com.kh.gorri.group.model.vo.Group" id="groupResultSet">
+		<id column="BOARD_ID" property="membershipNo"/>		
+		<result column="MEMBERSHIP_NAME" property="membershipName"/>
+		<result column="MEMBERSHIP_CONTENT" property="membershipContent"/>
+		<result column="CAPACITY" property="capacity"/>
+		<result column="MEMBERSHIP_DELETE" property="membershipStatus"/>
+		<result column="HOST_PHONE" property="hostPhone"/>
+		<result column="CATEGORY" property="category"/>
+		<result column="USERS_ID" property="hostId"/>		
+	</resultMap>
+	
+	
+	<select id="selectAttmGroupList" resultMap="attmResultSet">
+		select *
+		from attachment
+		where board_type= 2
+		order by attmid desc
+	</select>
+	
+	<resultMap type="com.kh.gorri.group.model.vo.Attachment" id="attmResultSet">
+		<id column="ATTMID" property="attmId"/>		
+		<result column="SAVE_PATH" property="savePath"/>
+		<result column="ORIGINALNAME" property="originalName"/>
+		<result column="RENAMENAME" property="renameName"/>
+		<result column="BOARD_TYPE" property="boardType"/>
+		<result column="BOARD_NO" property="boardNo"/>
+		<result column="ATTMLEVEL" property="attmLevel"/>
+		<result column="USERS_ID" property="userId"/>		
+	</resultMap>
 </mapper>

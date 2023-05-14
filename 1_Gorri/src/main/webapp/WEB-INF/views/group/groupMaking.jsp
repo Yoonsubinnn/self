@@ -73,7 +73,7 @@
 					</div>
 				</td>
 				<td class="tdtwwo">모임 이름</td>
-				<td><input name="membershipName" class="form-control me-2" style="width:200px; border: 1px solid gray;"></td>
+				<td><input name="membershipName" class="form-control me-2" style="width:200px; border: 1px solid gray;" required></td>
 			</tr>
 			
 			<tr>
@@ -90,7 +90,7 @@
 	    				<li><a class="dropdown-item cateSel">창작</a></li>
 	    				<li><a class="dropdown-item cateSel">자기계발</a></li>
 	  				</ul>
-	  				<input type="hidden" id="category" name="category">
+	  				<input type="hidden" id="category" name="category" required>
 	  			</td>
 			</tr>
 		</table>
@@ -106,11 +106,11 @@
 				<tr style="text-align:left;">
 					<td class="tdtwwo" style="height:50px; width:100px; font-size:20px">아이디</td>
 					<td>
-						<input name="hostId" class="form-control me-2" value="${ loginUser.userId }" style="width:170px; border: 1px solid gray;" readonly>
+						<input name="hostId" class="form-control me-2" value="${ loginUser.userId }" style="width:170px; border: 1px solid gray;" readonly required>
 					</td>
 					<td class="tdtwwo" style="padding-left:8px; height:50px; width:100px; font-size:20px">연락처</td>
 					<td>
-						<input name="hostPhone" class="form-control me-2" placeholder="연락처 입력" style="width:170px; border: 1px solid gray;">
+						<input name="hostPhone" class="form-control me-2" placeholder="연락처 입력" style="width:170px; border: 1px solid gray;" required>
 					</td>
 				</tr>
 				<tr >
@@ -118,7 +118,7 @@
 				</tr>
 				<tr>
 					<td colspan="4" style="padding-left:30px; padding-right:10px; padding-top:10px;">
-						<input name="membershipContent" class="form-control me-2" placeholder="모임 한줄 소개" style="width:100%; border: 1px solid lightgrey;">
+						<input name="membershipContent" class="form-control me-2" placeholder="모임 한줄 소개" style="width:100%; border: 1px solid lightgrey;" required>
 					</td>
 				</tr>
 			</table>

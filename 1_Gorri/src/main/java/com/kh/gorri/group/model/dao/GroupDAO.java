@@ -1,8 +1,12 @@
 package com.kh.gorri.group.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.gorri.common.model.vo.PageInfo;
 import com.kh.gorri.group.model.vo.Attachment;
 import com.kh.gorri.group.model.vo.Group;
 import com.kh.gorri.group.model.vo.GroupMember;
@@ -21,6 +25,19 @@ public class GroupDAO {
 	public int insertGroupMember(SqlSessionTemplate sqlSession, GroupMember gm) {
 		return sqlSession.insert("groupMapper.insertGroupMember", gm);
 	}
+
+	public int getListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("groupMapper.getListCount");
+	}
+
+	public ArrayList<Group> selectGroupList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1 ) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("groupMapper.selectGroupList", rowBounds);
+	}
 	
+	public ArrayList<Attachment> selectAttmGroupList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("groupMapper.selectAttmGroupList");
+	}
 
 }

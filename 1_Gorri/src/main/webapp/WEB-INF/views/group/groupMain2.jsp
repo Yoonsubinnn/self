@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,91 +99,105 @@
 
 <!-- 모임 목록 입니다.  -->
 <div align="center" style="margin:30px; margin-left:auto; margin-right:auto;">
+   	
+   	
+   	<c:forEach items="${ gList }" var="g">
    	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" >
 				<tr>
-					<td class="groupPic" rowspan ="3">
-						<img src="resources/assets/musical.jpg" class="gThumnail">
-					</td>
-					<td class="groupTitle"><a href="${ contextPath }/groupDetailY.gr" class="groupLink">오페라의 유령</a></td>
+					<c:forEach items="${ gAttm }" var="a">
+					
+						<c:if test="${ l.membershipNo eq a.membershipNo }">					
+							<c:if test="${ fn:containsIgnoreCase(a.renameName, 'jpg') or fn:containsIgnoreCase(a.renameName, 'png')}">
+								<td class="groupPic" rowspan ="3">
+									<img src="${contextPath }/resources/uploadFiles/${a.renameName}"  class="gThumnail">
+								</td>
+							</c:if>	
+						</c:if>	
+					</c:forEach>	
+					<td class="groupTitle"><a href="${ contextPath }/groupDetailY.gr" class="groupLink">${ g.membershipName }</a></td>
 				</tr>				
 				<tr>
-					<td class="groupIntro">오페라의 유령 얘기할 사람</td>
+					<td class="groupIntro">${ g.membershipContent }</td>
 				</tr>
 				<tr>
 					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;">
 						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;"> 
-						<span>10</span>
+						<span>${ g.capacity }</span>
+						<input type="hidden" value="${ g.membershipNo }">
 					</td> 
 				</tr>
 	</table> 
-   	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" >
-				<tr>
-					<td class="groupPic" rowspan ="3">
-						<img src="resources/assets/marvel.jpg" class="gThumnail">
-					</td>
-					<td class="groupTitle"><a href="${ contextPath }/groupDetailN.gr" class="groupLink">영화를 사랑하는 모임</a></td>
-				</tr>				
-				<tr>
-					<td class="groupIntro">같이 영화 볼 사람 모집</td>
-				</tr>
-				<tr>
-					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;">
-						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;"> 
-						<span>10</span>
-					</td> 
-				</tr>
-	</table> 
-   	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" >
-				<tr>
-					<td class="groupPic" rowspan ="3">
-						<img src="resources/assets/knitting.jpg" class="gThumnail">
-					</td>
-					<td class="groupTitle"><a href="${ contextPath }/groupDetailAdmin.gr" class="groupLink">뜨개뜨개</a></td>
-				</tr>				
-				<tr>
-					<td class="groupIntro">뜨개질 정보 공유</td>
-				</tr>
-				<tr>
-					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;">
-						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;"> 
-						<span>10</span>
-					</td> 
-				</tr>
-	</table> 
-   	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" >
-				<tr>
-					<td class="groupPic" rowspan ="3">
-						<img src="resources/assets/musical.jpg" class="gThumnail">
-					</td>
-					<td class="groupTitle"><a href="${ contextPath }/groupDetailY.gr" class="groupLink">오페라의 유령</a></td>
-				</tr>				
-				<tr>
-					<td class="groupIntro">오페라의 유령 얘기할 사람</td>
-				</tr>
-				<tr>
-					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;">
-						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;"> 
-						<span>10</span>
-					</td> 
-				</tr>
-	</table> 
-   	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" >
-				<tr>
-					<td class="groupPic" rowspan ="3">
-						<img src="resources/assets/musical.jpg" class="gThumnail">
-					</td>
-					<td class="groupTitle"><a href="${ contextPath }/groupDetailY.gr" class="groupLink">오페라의 유령</a></td>
-				</tr>				
-				<tr>
-					<td class="groupIntro">오페라의 유령 얘기할 사람</td>
-				</tr>
-				<tr>
-					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;">
-						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;"> 
-						<span>10</span>
-					</td> 
-				</tr>
-	</table> 
+   	
+   	</c:forEach>
+   	
+<!--    	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" > -->
+<!-- 				<tr> -->
+<!-- 					<td class="groupPic" rowspan ="3"> -->
+<!-- 						<img src="resources/assets/marvel.jpg" class="gThumnail"> -->
+<!-- 					</td> -->
+<%-- 					<td class="groupTitle"><a href="${ contextPath }/groupDetailN.gr" class="groupLink">영화를 사랑하는 모임</a></td> --%>
+<!-- 				</tr>				 -->
+<!-- 				<tr> -->
+<!-- 					<td class="groupIntro">같이 영화 볼 사람 모집</td> -->
+<!-- 				</tr> -->
+<!-- 				<tr> -->
+<!-- 					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;"> -->
+<!-- 						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;">  -->
+<!-- 						<span>10</span> -->
+<!-- 					</td>  -->
+<!-- 				</tr> -->
+<!-- 	</table>  -->
+<!--    	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" > -->
+<!-- 				<tr> -->
+<!-- 					<td class="groupPic" rowspan ="3"> -->
+<!-- 						<img src="resources/assets/knitting.jpg" class="gThumnail"> -->
+<!-- 					</td> -->
+<%-- 					<td class="groupTitle"><a href="${ contextPath }/groupDetailAdmin.gr" class="groupLink">뜨개뜨개</a></td> --%>
+<!-- 				</tr>				 -->
+<!-- 				<tr> -->
+<!-- 					<td class="groupIntro">뜨개질 정보 공유</td> -->
+<!-- 				</tr> -->
+<!-- 				<tr> -->
+<!-- 					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;"> -->
+<!-- 						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;">  -->
+<!-- 						<span>10</span> -->
+<!-- 					</td>  -->
+<!-- 				</tr> -->
+<!-- 	</table>  -->
+<!--    	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" > -->
+<!-- 				<tr> -->
+<!-- 					<td class="groupPic" rowspan ="3"> -->
+<!-- 						<img src="resources/assets/musical.jpg" class="gThumnail"> -->
+<!-- 					</td> -->
+<%-- 					<td class="groupTitle"><a href="${ contextPath }/groupDetailY.gr" class="groupLink">오페라의 유령</a></td> --%>
+<!-- 				</tr>				 -->
+<!-- 				<tr> -->
+<!-- 					<td class="groupIntro">오페라의 유령 얘기할 사람</td> -->
+<!-- 				</tr> -->
+<!-- 				<tr> -->
+<!-- 					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;"> -->
+<!-- 						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;">  -->
+<!-- 						<span>10</span> -->
+<!-- 					</td>  -->
+<!-- 				</tr> -->
+<!-- 	</table>  -->
+<!--    	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" > -->
+<!-- 				<tr> -->
+<!-- 					<td class="groupPic" rowspan ="3"> -->
+<!-- 						<img src="resources/assets/musical.jpg" class="gThumnail"> -->
+<!-- 					</td> -->
+<%-- 					<td class="groupTitle"><a href="${ contextPath }/groupDetailY.gr" class="groupLink">오페라의 유령</a></td> --%>
+<!-- 				</tr>				 -->
+<!-- 				<tr> -->
+<!-- 					<td class="groupIntro">오페라의 유령 얘기할 사람</td> -->
+<!-- 				</tr> -->
+<!-- 				<tr> -->
+<!-- 					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;"> -->
+<!-- 						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;">  -->
+<!-- 						<span>10</span> -->
+<!-- 					</td>  -->
+<!-- 				</tr> -->
+<!-- 	</table>  -->
  </div>
 <%@include file = "../common/footer.jsp" %>
 </body>

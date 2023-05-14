@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.gorri.common.Pagination;
+import com.kh.gorri.common.model.vo.PageInfo;
+import com.kh.gorri.group.model.exception.GroupException;
 import com.kh.gorri.group.model.service.GroupService;
 import com.kh.gorri.group.model.vo.Attachment;
 import com.kh.gorri.group.model.vo.Group;
@@ -29,6 +32,9 @@ public class GroupController {
 	
 	@RequestMapping("groupMain.gr")
 	public String groupMain() {
+		
+		
+		
 		return "groupMain2";
 	}
 	
@@ -44,8 +50,28 @@ public class GroupController {
 	
 	
 	@RequestMapping(value="groupMaking.gr")
-	public String groupMaking() {
-		return "groupMaking"; 
+	public String groupMaking(@RequestParam(value="page", required=false) Integer page, Model model) {
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = gService.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 9);
+		
+		ArrayList<Group> gList = gService.selectGroupList(pi);
+		ArrayList<Attachment> gAttm = gService.selectAttmGroupList();
+		
+		if(gList != null) {
+			model.addAttribute("pi", pi);
+			model.addAttribute("gList", gList);
+			model.addAttribute("gAttm", gAttm);
+			
+			return "groupMaking"; 
+		} else {
+			throw new GroupException("모임 조회를 실패했습니다.");
+		}
 	}
 	
 	@RequestMapping(value="groupJoin.gr")
@@ -94,9 +120,6 @@ public class GroupController {
 		int result2 = gService.insertAttm(a);
 		int result3 = gService.insertGroupMember(gm);
 		
-		System.out.println(result1);
-		System.out.println(result2);
-		System.out.println(result3);
 		return "redirect:groupMain.gr";
 	}
 	

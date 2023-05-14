@@ -1,9 +1,12 @@
 package com.kh.gorri.group.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.gorri.common.model.vo.PageInfo;
 import com.kh.gorri.group.model.dao.GroupDAO;
 import com.kh.gorri.group.model.vo.Attachment;
 import com.kh.gorri.group.model.vo.Group;
@@ -32,6 +35,26 @@ public class GroupServiceImpl implements GroupService {
 	public int insertGroupMember(GroupMember gm) {
 		return gDAO.insertGroupMember(sqlSession, gm);
 	}
+
+	@Override
+	public int getListCount() {
+		return gDAO.getListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Group> selectGroupList(PageInfo pi) {
+		return gDAO.selectGroupList(sqlSession, pi);
+	}
+
+	@Override
+	public ArrayList<Attachment> selectAttmGroupList() {
+		return gDAO.selectAttmGroupList(sqlSession);
+	}
+
+	
+
+	
+	
 
 	
 }
