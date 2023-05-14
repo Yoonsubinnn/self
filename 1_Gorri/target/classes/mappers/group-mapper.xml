@@ -25,7 +25,7 @@
 	</select>
 	
 	<resultMap type="com.kh.gorri.group.model.vo.Group" id="groupResultSet">
-		<id column="BOARD_ID" property="membershipNo"/>		
+		<id column="MEMBERSHIP_NO" property="membershipNo"/>		
 		<result column="MEMBERSHIP_NAME" property="membershipName"/>
 		<result column="MEMBERSHIP_CONTENT" property="membershipContent"/>
 		<result column="CAPACITY" property="capacity"/>

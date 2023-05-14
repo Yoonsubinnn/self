@@ -31,8 +31,26 @@ public class GroupController {
 	private GroupService gService;
 	
 	@RequestMapping("groupMain.gr")
-	public String groupMain() {
+	public String groupMain(@RequestParam(value="page", required=false) Integer page, Model model) {
+
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
 		
+		int listCount = gService.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 9);
+		
+		ArrayList<Group> gList = gService.selectGroupList(pi);
+		ArrayList<Attachment> gAttm = gService.selectAttmGroupList();
+		if(gList != null) {
+			model.addAttribute("pi", pi);
+			model.addAttribute("gList", gList);
+			model.addAttribute("gAttm", gAttm);
+			
+		} else {
+			throw new GroupException("모임 조회를 실패했습니다.");
+		}
 		
 		
 		return "groupMain2";
@@ -50,28 +68,9 @@ public class GroupController {
 	
 	
 	@RequestMapping(value="groupMaking.gr")
-	public String groupMaking(@RequestParam(value="page", required=false) Integer page, Model model) {
+	public String groupMaking() {
 		
-		int currentPage = 1;
-		if(page != null) {
-			currentPage = page;
-		}
-		
-		int listCount = gService.getListCount();
-		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 9);
-		
-		ArrayList<Group> gList = gService.selectGroupList(pi);
-		ArrayList<Attachment> gAttm = gService.selectAttmGroupList();
-		
-		if(gList != null) {
-			model.addAttribute("pi", pi);
-			model.addAttribute("gList", gList);
-			model.addAttribute("gAttm", gAttm);
-			
-			return "groupMaking"; 
-		} else {
-			throw new GroupException("모임 조회를 실패했습니다.");
-		}
+		return "groupMaking"; 
 	}
 	
 	@RequestMapping(value="groupJoin.gr")

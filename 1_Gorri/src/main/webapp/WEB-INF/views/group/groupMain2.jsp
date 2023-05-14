@@ -102,32 +102,29 @@
    	
    	
    	<c:forEach items="${ gList }" var="g">
-   	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" >
-				<tr>
-					<c:forEach items="${ gAttm }" var="a">
-					
-						<c:if test="${ l.membershipNo eq a.membershipNo }">					
-							<c:if test="${ fn:containsIgnoreCase(a.renameName, 'jpg') or fn:containsIgnoreCase(a.renameName, 'png')}">
-								<td class="groupPic" rowspan ="3">
-									<img src="${contextPath }/resources/uploadFiles/${a.renameName}"  class="gThumnail">
-								</td>
-							</c:if>	
-						</c:if>	
-					</c:forEach>	
-					<td class="groupTitle"><a href="${ contextPath }/groupDetailY.gr" class="groupLink">${ g.membershipName }</a></td>
-				</tr>				
-				<tr>
-					<td class="groupIntro">${ g.membershipContent }</td>
-				</tr>
-				<tr>
-					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;">
-						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;"> 
-						<span>${ g.capacity }</span>
-						<input type="hidden" value="${ g.membershipNo }">
-					</td> 
-				</tr>
-	</table> 
-   	
+	   	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" >
+					<tr>
+						<td class="groupPic" rowspan ="3">
+							<c:forEach items="${ gAttm }" var="a">							
+								<c:if test="${ g.membershipNo eq a.boardNo }">									
+									<img src="${ contextPath }/resources/uploadFiles/${a.renameName}"  class="gThumnail">
+								</c:if>	
+							</c:forEach>	
+						</td>
+						<td class="groupTitle"><a href="${ contextPath }/groupDetailY.gr" class="groupLink">${ g.membershipName }</a></td>
+					</tr>				
+					<tr>
+						<td class="groupIntro">${ g.membershipContent }</td>
+					</tr>
+					<tr>
+						<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;">
+							<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;"> 
+							<span>${ g.capacity }</span>
+							<input type="hidden" value="${ g.membershipNo }">
+						</td> 
+					</tr>
+		</table> 
+	   	
    	</c:forEach>
    	
 <!--    	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" > -->
