@@ -95,7 +95,7 @@
 		</div><br>
 
 
-<%@include file = "../common/category.jsp" %>
+<%@include file = "../common/categoryGroup.jsp" %>
 
 <!-- 모임 목록 입니다.  -->
 <div align="center" style="margin:30px; margin-left:auto; margin-right:auto;">
@@ -195,7 +195,51 @@
 <!-- 					</td>  -->
 <!-- 				</tr> -->
 <!-- 	</table>  -->
+				<nav aria-label="Standard pagination example" style="float: right;">
+					<ul class="pagination">
+	           				<li class="page-item">
+	            					<c:url var="goBack" value="${ loc }">
+	            						<c:param name="page" value="${ pi.currentPage-1 }"></c:param>
+	            					</c:url>
+	            					<a class="page-link" href="${ goBack }" aria-label="Previous">
+	            						<span aria-hidden="true">&laquo;</span>
+	              					</a>
+	            				</li>
+	            				<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+	           					<c:url var="goNum" value="${ loc }">
+	           						<c:param name="page" value="${ p }"></c:param>
+	           					</c:url>
+	            					<li class="page-item"><a class="page-link" href="${ goNum }">${ p }</a></li>
+	            				</c:forEach>
+	            				<li class="page-item">
+	            					<c:url var="goNext" value="${ loc }">
+	            						<c:param name="page" value="${ pi.currentPage+1 }"></c:param>
+	            					</c:url>
+	            					<a class="page-link" href="${ goNext }" aria-label="Next">
+	            						<span aria-hidden="true">&raquo;</span>
+	            					</a>
+	            				</li>
+	    				</ul>
+        			</nav>
+
  </div>
 <%@include file = "../common/footer.jsp" %>
+<script>
+	window.onload=()=>{
+		
+		const cateName = document.getElementsByClassName('categorys');
+		
+		for(cn of cateName){
+			cn.addEventListener('click',function(){
+				const category = this.querySelector('.category-name').innerText;
+				console.log(category);
+				location.href="${contextPath}/selectCate.gr?category=" + category;
+			})
+					
+		}
+		
+	}
+
+</script>
 </body>
 </html>

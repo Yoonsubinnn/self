@@ -156,4 +156,32 @@ public class GroupController {
 		return returnArr;
 	
 	}
+	
+	@RequestMapping("selectCate.gr")
+	public String selectCate(@RequestParam(value="page", required=false) Integer page,
+							 @RequestParam("category") String category, Model model) {
+		
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int listCount = gService.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 9);
+		
+		ArrayList<Group> gList = gService.selectGroupList(pi);
+		ArrayList<Attachment> gAttm = gService.selectAttmGroupList();
+		if(gList != null) {
+			model.addAttribute("pi", pi);
+			model.addAttribute("gList", gList);
+			model.addAttribute("gAttm", gAttm);
+			model.addAttribute("category", category);
+			
+		} else {
+			throw new GroupException("모임 조회를 실패했습니다.");
+		}
+		
+		
+		return "groupCateSelect";
+	}
 }
