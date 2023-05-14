@@ -10,7 +10,7 @@
 		values(seq_membership.nextval, #{membershipName}, #{ membershipContent }, 1, default, #{ hostPhone }, #{ category })
 	</insert>
 	<insert id="insertGroupMember">
-		insert into member values (#{memberId}, seq_membership.nextval, #{grade}, sysdate, default )
+		insert into member values (#{memberId}, seq_membership.currval, #{grade}, sysdate, default )
 	</insert>
 	
 </mapper>
