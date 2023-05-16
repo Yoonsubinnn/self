@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,10 +112,10 @@
 				</div>
 				<div class="admin-id">관리자아이디</div><br>
 				<div>
-					<button class="non-click click" onclick="location.href='${ contextPath }/adminDash.ad'"><i class="bi bi-grid-fill"></i> 대시보드</button>
-					<button class="non-click" onclick="location.href='${ contextPath }/adminMember.ad'"><i class="bi bi-person-fill"></i> 회원관리</button>
+					<button class="non-click" onclick="location.href='${ contextPath }/adminDash.ad'"><i class="bi bi-grid-fill"></i> 대시보드</button>
+					<button class="non-click" onclick="location.href='${ contextPath }/adminMember.me'"><i class="bi bi-person-fill"></i> 회원관리</button>
 					<button class="non-click" onclick="location.href='${ contextPath }/adminContent.ad'"><i class="bi bi-pencil-square"></i> 게시글 관리</button>
-					<button class="non-click" onclick="location.href='${ contextPath }/adminMoim.ad'"><i class="bi bi-people-fill"></i> 모임 관리</button>
+					<button class="non-click click" onclick="location.href='${ contextPath }/adminMoim.gr'"><i class="bi bi-people-fill"></i> 모임 관리</button>
 					<button class="non-click" onclick="location.href='${ contextPath }/adminMarket.ad'"><i class="bi bi-cart-fill"></i> 마켓 관리</button>
 				</div>
 			</div>
@@ -126,120 +127,25 @@
 					<ul>
 						<li>모임 관리</li>
 					</ul>
-					<table>
+					<table style="width:1000px">
 						<tr class="top">
-							<th class="sel">선택</th>
 							<th class="no">번호</th>
-							<th class="date">개설일</th>
 							<th class="grade">카테고리</th>
 							<th class="nick">모임명</th>
-							<th class="grade">모집상태</th>
-							<th class="grade">회원수</th>
-							<th class="yn">활동</th>
+							<th class="grade">모임장</th>
+							<th class="yn">회원수</th>
 						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>요리</td>
-							<td>그림그리는 모임</td>
-							<td>Y</td>
-							<td>23</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>운동</td>
-							<td>모임2</td>
-							<td>N</td>
-							<td>23</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>요리</td>
-							<td>닉네임1</td>
-							<td>Y</td>
-							<td>23</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>요리</td>
-							<td>닉네임1</td>
-							<td>Y</td>
-							<td>23</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>요리</td>
-							<td>닉네임1</td>
-							<td>N</td>
-							<td>23</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>요리</td>
-							<td>닉네임1</td>
-							<td>N</td>
-							<td>23</td>
-							<td>Y</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>요리</td>
-							<td>닉네임1</td>
-							<td>Y</td>
-							<td>23</td>
-							<td>Y</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>요리</td>
-							<td>닉네임1</td>
-							<td>Y</td>
-							<td>23</td>
-							<td>Y</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>요리</td>
-							<td>닉네임1</td>
-							<td>Y</td>
-							<td>23</td>
-							<td>Y</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>요리</td>
-							<td>닉네임1</td>
-							<td>Y</td>
-							<td>23</td>
-							<td>Y</td>
-						</tr>
+						<c:forEach items="${ gList }" var="g">
+							<tr class="tr-hover groupList">
+								<td>${ g.membershipNo }</td>
+								<td>${ g.category }</td>
+								<td>${ g.membershipName }</td>
+								<td>${ g.hostId }</td>
+								<td>${ g.capacity }</td>
+							</tr>
+						</c:forEach>	
 					</table>
-					<br>
-					<div class="button"><button class="kick">모임삭제</button></div>
+					<br>					
 				</div>
 			</div>
 			
@@ -250,7 +156,23 @@
 
 
 	<%@ include file="../common/footer.jsp" %>
+<script>
+	window.onload=()=>{
+		const trs = document.getElementsByClassName('groupList');
+		console.log(trs);
+		for(tr of trs){
+			tr.addEventListener("click", function(){
+				
+				const membershipNo = this.querySelector('td').innerText;
+				location.href=""
+			})
+		}
+		
+		
+		
+	}
 
+</script>
 
 </body>
 </html>

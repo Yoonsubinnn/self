@@ -111,9 +111,9 @@
 				<div class="admin-id">관리자아이디</div><br>
 				<div>
 					<button class="non-click click" onclick="location.href='${ contextPath }/adminDash.ad'"><i class="bi bi-grid-fill"></i> 대시보드</button>
-					<button class="non-click" onclick="location.href='${ contextPath }/adminMember.ad'"><i class="bi bi-person-fill"></i> 회원관리</button>
+					<button class="non-click" onclick="location.href='${ contextPath }/adminMember.me'"><i class="bi bi-person-fill"></i> 회원관리</button>
 					<button class="non-click" onclick="location.href='${ contextPath }/adminContent.ad'"><i class="bi bi-pencil-square"></i> 게시글 관리</button>
-					<button class="non-click" onclick="location.href='${ contextPath }/adminMoim.ad'"><i class="bi bi-people-fill"></i> 모임 관리</button>
+					<button class="non-click" onclick="location.href='${ contextPath }/adminMoim.gr'"><i class="bi bi-people-fill"></i> 모임 관리</button>
 					<button class="non-click" onclick="location.href='${ contextPath }/adminMarket.ad'"><i class="bi bi-cart-fill"></i> 마켓 관리</button>
 				</div>
 			</div>

@@ -1,5 +1,7 @@
 package com.kh.gorri.member.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.kh.gorri.common.Pagination;
+import com.kh.gorri.common.model.vo.PageInfo;
+import com.kh.gorri.group.model.exception.GroupException;
+import com.kh.gorri.group.model.vo.Attachment;
+import com.kh.gorri.group.model.vo.Group;
 import com.kh.gorri.member.model.exception.MemberException;
 import com.kh.gorri.member.model.service.MemberService;
 import com.kh.gorri.member.model.vo.Member;
@@ -148,6 +155,35 @@ public class MemberController {
 		
 	}
 	
+	
+	// 관리자 페이지(회원 조회)
+	@RequestMapping("adminMember.me")
+	public String adminMember(@RequestParam(value="page", required=false) Integer currentPage,
+							  Model model) {
+		
+		if(currentPage == null) {
+			currentPage = 1; 
+		}
+		
+		int listCount = mService.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
+		
+		System.out.println(pi);
+		
+		ArrayList<Member> mList = mService.selectMemberList(pi);
+		System.out.println(mList);
+		if(mList != null) {
+			model.addAttribute("pi", pi);
+			model.addAttribute("mList", mList);
+			return "adminMember";
+			
+		} else {
+			throw new GroupException("회원 조회를 실패했습니다.");
+		}
+		
+		
+		
+	}
 	
 	
 	

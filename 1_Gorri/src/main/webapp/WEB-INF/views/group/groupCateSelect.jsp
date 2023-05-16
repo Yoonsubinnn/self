@@ -89,7 +89,7 @@
 		
 		
 	<!-- 모임 검색창 + 모임 개설 버튼 -->
-		<%@include file = "../common/search.jsp" %>
+		<%@include file = "../common/searchGroup.jsp" %>
         <br>
         <div class="gTitle">
 		<a href="${ contextPath }/groupMaking.gr"><button class="btn btn-outline-success" type="button" style="background-color:#ffab00; color:white; border:1px solid #ffab00">모임 개설</button></a>
@@ -103,6 +103,7 @@
    	
    	
    	<c:forEach items="${ gList }" var="g">
+   		${ category }
 		<c:if test="${ category eq g.category}">   	
 		   	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" >
 						<tr>
@@ -171,6 +172,8 @@
 			})
 					
 		}
+		
+		
 		
 	}
 

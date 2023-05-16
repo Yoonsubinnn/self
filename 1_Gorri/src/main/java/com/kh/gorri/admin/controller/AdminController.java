@@ -11,11 +11,11 @@ public class AdminController {
 	public String adminDash() {
 		return "adminDash";
 	}
-	
-	@RequestMapping("adminMember.ad")
-	public String adminMember() {
-		return "adminMember";
-	}
+//	
+//	@RequestMapping("adminMember.ad")
+//	public String adminMember() {
+//		return "adminMember";
+//	} => memberController 로 보냈습니다. .me해서
 	@RequestMapping("adminContent.ad")
 	public String adminContent() {
 		return "adminContent";

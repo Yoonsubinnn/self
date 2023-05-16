@@ -61,24 +61,25 @@
 		<tr>
 			<td rowspan ="3" style="padding-left:50px;">
 				<div class="groupPic" style="border-radius:2em;"> 
-					<img src="resources/assets/marvel.jpg" style="width:250px; height:250px; border:5px solid #ffab00;">
+					<img src="${ contextPath }/resources/uploadFiles/${groupPic.renameName}"  style="width:250px; height:250px; border:5px solid #ffab00;">
+<!-- 					<img src="resources/assets/marvel.jpg" style="width:250px; height:250px; border:5px solid #ffab00;"> -->
 				</div>
 			</td>
 			<td class="tdtwwo paddingt20" style="font-size:25px;">
 				<div>
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-film" viewBox="0 0 16 16">
  						 <path d="M0 1a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V1zm4 0v6h8V1H4zm8 8H4v6h8V9zM1 1v2h2V1H1zm2 3H1v2h2V4zM1 7v2h2V7H1zm2 3H1v2h2v-2zm-2 3v2h2v-2H1zM15 1h-2v2h2V1zm-2 3v2h2V4h-2zm2 3h-2v2h2V7zm-2 3v2h2v-2h-2zm2 3h-2v2h2v-2z"/>
-					</svg> 예술
+					</svg> ${groupInfo.category}
 				</div>
 			</td>
 		</tr>
 		<tr>
-			<td class="tdtwwo paddingt20">영화를 사랑하는 모임</td>
+			<td class="tdtwwo paddingt20">${groupInfo.membershipName}</td>
 		</tr>
 		<tr>
 			<td class="tdtwwo paddingt20" >
-				<div>영화를 사랑하는 사람들이 모여 일주일에 한번씩 영화보면서 놀아요~!</div>
-				<div style="font-size:15px; font-weight:normal; padding-top:15px;">멤버 : <span>10명</span></div>
+				<div>${groupInfo.membershipContent}</div>
+				<div style="font-size:15px; font-weight:normal; padding-top:15px;">멤버 : <span>${groupInfo.capacity }명</span></div>
 			</td>
 		</tr>
 	
@@ -88,7 +89,7 @@
 	
 	<table>
 		<tr>
-			<td colspan="6" class="tdtwwwoo" style="height:70px; text-align:left;"> 개설자 정보</td>
+			<td colspan="4" class="tdtwwwoo" style="height:70px; text-align:left;"> 개설자 정보</td>
 		</tr>
 		
 		<tr style="text-align:left;">
@@ -96,8 +97,6 @@
 			<td><input class="form-control me-2" aria-label="Search" placeholder="이름 입력" style="width:170px; border: 1px solid gray;"></td>
 			<td class="tdtwwwoo" style="padding-left:8px; height:50px; weight:10px; font-size:20px">연락처</td>
 			<td><input class="form-control me-2" aria-label="Search" placeholder="연락처 입력" style="width:170px; border: 1px solid gray;"></td>
-			<td class="tdtwwwoo"  style="padding-left:8px; height:50px; weight:10px; font-size:20px">이메일</td>
-			<td><input class="form-control me-2" aria-label="Search" placeholder="이메일 입력" style="width:170px; border: 1px solid gray;"></td>
 		</tr>
 	</table>
 	

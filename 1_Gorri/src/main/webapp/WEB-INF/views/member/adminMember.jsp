@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -109,10 +110,10 @@
 				</div>
 				<div class="admin-id">관리자아이디</div><br>
 				<div>
-					<button class="non-click click" onclick="location.href='${ contextPath }/adminDash.ad'"><i class="bi bi-grid-fill"></i> 대시보드</button>
-					<button class="non-click" onclick="location.href='${ contextPath }/adminMember.ad'"><i class="bi bi-person-fill"></i> 회원관리</button>
+					<button class="non-click" onclick="location.href='${ contextPath }/adminDash.ad'"><i class="bi bi-grid-fill"></i> 대시보드</button>
+					<button class="non-click click" onclick="location.href='${ contextPath }/adminMember.me'"><i class="bi bi-person-fill"></i> 회원관리</button>
 					<button class="non-click" onclick="location.href='${ contextPath }/adminContent.ad'"><i class="bi bi-pencil-square"></i> 게시글 관리</button>
-					<button class="non-click" onclick="location.href='${ contextPath }/adminMoim.ad'"><i class="bi bi-people-fill"></i> 모임 관리</button>
+					<button class="non-click" onclick="location.href='${ contextPath }/adminMoim.gr'"><i class="bi bi-people-fill"></i> 모임 관리</button>
 					<button class="non-click" onclick="location.href='${ contextPath }/adminMarket.ad'"><i class="bi bi-cart-fill"></i> 마켓 관리</button>
 				</div>
 			</div>
@@ -126,107 +127,51 @@
 					</ul>
 					<table>
 						<tr class="top">
-							<th class="sel">선택</th>
-							<th class="no">번호</th>
-							<th class="date">가입일</th>
 							<th class="nick">아이디</th>
 							<th class="date">비밀번호 찾기 질문</th>
 							<th class="date">비밀번호 찾기 답</th>
+							<th class="date">가입일</th>
 							<th class="yn">활동</th>
+							<th> 추방 </th>>
 						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>닉네임1</td>
-							<td>내 보물 1호는</td>
-							<td>댕댕이</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>닉네임1</td>
-							<td>내 보물 1호는</td>
-							<td>댕댕이</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>닉네임1</td>
-							<td>내 보물 1호는</td>
-							<td>댕댕이</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>닉네임1</td>
-							<td>내 보물 1호는</td>
-							<td>댕댕이</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>닉네임1</td>
-							<td>내 보물 1호는</td>
-							<td>댕댕이</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>닉네임1</td>
-							<td>내 보물 1호는</td>
-							<td>댕댕이</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>닉네임1</td>
-							<td>내 보물 1호는</td>
-							<td>댕댕이</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>닉네임1</td>
-							<td>내 보물 1호는</td>
-							<td>댕댕이</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>닉네임1</td>
-							<td>내 보물 1호는</td>
-							<td>댕댕이</td>
-							<td>Y</td>
-						</tr>
-						<tr class="tr-hover">
-							<td><input type="checkbox"></td>
-							<td>1234</td>
-							<td>2023.00.00</td>
-							<td>닉네임1</td>
-							<td>내 보물 1호는</td>
-							<td>댕댕이</td>
-							<td>Y</td>
-						</tr>
+						<c:forEach items="${ mList }" var="m">
+							<tr class="tr-hover">	
+								<td>${ m.userId }</td>
+								<td>${ m.pwdQ }</td>
+								<td>${ m.pwdHint }</td>
+								<td>${ m.enrollDate }</td>
+								<td>${ m.status }</td>
+								<td><button style="width:40px; height:20px; font-size:10px;" id="deleteUser">추방</button></td>
+							</tr>	
+							
+						</c:forEach>						
 					</table>
 					<br>
-					<div class="button"><button class="kick">멤버추방</button></div>
+
+					<nav aria-label="Standard pagination example" style="float: right;">
+						<ul class="pagination">
+							<li class="page-item"><c:url value="${ loc }" var="goBack">
+									<c:param name="page" value="${ pi.currentPage -1 }" />
+								</c:url> <a class="page-link" href="${ goBack }" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+							</a></li>
+
+							<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }"
+								var="p">
+								<c:url var="goNum" value="${ loc }">
+									<c:param name="page" value="${ p }" />
+								</c:url>
+								<li class="page-item"><a class="page-link"
+									href="${ goNum }">${ p }</a></li>
+							</c:forEach>
+
+							<li class="page-item"><c:url value="${ loc }" var="goNext">
+									<c:param name="page" value="${ pi.currentPage + 1 }" />
+								</c:url> <a class="page-link" href="${ goNext }" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+							</a></li>
+						</ul>
+					</nav>					
 				</div>
 			</div>
 		</div>

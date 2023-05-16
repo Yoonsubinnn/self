@@ -1,9 +1,12 @@
 package com.kh.gorri.member.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.gorri.common.model.vo.PageInfo;
 import com.kh.gorri.member.model.dao.MemberDAO;
 import com.kh.gorri.member.model.vo.Member;
 
@@ -47,6 +50,16 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int checkNick(String nickName) {
 		return mDAO.checkNick(sqlSession, nickName);
+	}
+
+	@Override
+	public int getListCount() {
+		return mDAO.getListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Member> selectMemberList(PageInfo pi) {
+		return mDAO.selectMemberList(sqlSession, pi);
 	}
 	
 	//보서) 아이디 찾기 구현 2023.05.12

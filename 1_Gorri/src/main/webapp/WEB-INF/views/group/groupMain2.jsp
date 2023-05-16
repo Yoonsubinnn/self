@@ -88,12 +88,19 @@
 		
 		
 	<!-- 모임 검색창 + 모임 개설 버튼 -->
-		<%@include file = "../common/search.jsp" %>
+		<%@include file = "../common/searchGroup.jsp" %>
         <br>
+        <c:if test="${ !empty loginUser }">
         <div class="gTitle">
 		<a href="${ contextPath }/groupMaking.gr"><button class="btn btn-outline-success" type="button" style="background-color:#ffab00; color:white; border:1px solid #ffab00">모임 개설</button></a>
 		</div><br>
-
+		</c:if>
+		
+		<c:if test="${ empty loginUser }">
+		<div class="gTitle">
+		<button id="noLogin" class="btn btn-outline-success" type="button" style="background-color:#ffab00; color:white; border:1px solid #ffab00">모임 개설</button>
+		</div><br>
+		</c:if>
 
 <%@include file = "../common/categoryGroup.jsp" %>
 
@@ -111,7 +118,7 @@
 								</c:if>	
 							</c:forEach>	
 						</td>
-						<td class="groupTitle"><a href="${ contextPath }/groupDetailY.gr" class="groupLink">${ g.membershipName }</a></td>
+						<td class="groupTitle"><a href="${ contextPath }/groupDetailAdmin.gr?membershipNo=${ g.membershipNo }" class="groupLink">${ g.membershipName }</a></td>
 					</tr>				
 					<tr>
 						<td class="groupIntro">${ g.membershipContent }</td>
@@ -123,78 +130,8 @@
 							<input type="hidden" value="${ g.membershipNo }">
 						</td> 
 					</tr>
-		</table> 
-	   	
+		</table>	   	
    	</c:forEach>
-   	
-<!--    	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" > -->
-<!-- 				<tr> -->
-<!-- 					<td class="groupPic" rowspan ="3"> -->
-<!-- 						<img src="resources/assets/marvel.jpg" class="gThumnail"> -->
-<!-- 					</td> -->
-<%-- 					<td class="groupTitle"><a href="${ contextPath }/groupDetailN.gr" class="groupLink">영화를 사랑하는 모임</a></td> --%>
-<!-- 				</tr>				 -->
-<!-- 				<tr> -->
-<!-- 					<td class="groupIntro">같이 영화 볼 사람 모집</td> -->
-<!-- 				</tr> -->
-<!-- 				<tr> -->
-<!-- 					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;"> -->
-<!-- 						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;">  -->
-<!-- 						<span>10</span> -->
-<!-- 					</td>  -->
-<!-- 				</tr> -->
-<!-- 	</table>  -->
-<!--    	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" > -->
-<!-- 				<tr> -->
-<!-- 					<td class="groupPic" rowspan ="3"> -->
-<!-- 						<img src="resources/assets/knitting.jpg" class="gThumnail"> -->
-<!-- 					</td> -->
-<%-- 					<td class="groupTitle"><a href="${ contextPath }/groupDetailAdmin.gr" class="groupLink">뜨개뜨개</a></td> --%>
-<!-- 				</tr>				 -->
-<!-- 				<tr> -->
-<!-- 					<td class="groupIntro">뜨개질 정보 공유</td> -->
-<!-- 				</tr> -->
-<!-- 				<tr> -->
-<!-- 					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;"> -->
-<!-- 						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;">  -->
-<!-- 						<span>10</span> -->
-<!-- 					</td>  -->
-<!-- 				</tr> -->
-<!-- 	</table>  -->
-<!--    	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" > -->
-<!-- 				<tr> -->
-<!-- 					<td class="groupPic" rowspan ="3"> -->
-<!-- 						<img src="resources/assets/musical.jpg" class="gThumnail"> -->
-<!-- 					</td> -->
-<%-- 					<td class="groupTitle"><a href="${ contextPath }/groupDetailY.gr" class="groupLink">오페라의 유령</a></td> --%>
-<!-- 				</tr>				 -->
-<!-- 				<tr> -->
-<!-- 					<td class="groupIntro">오페라의 유령 얘기할 사람</td> -->
-<!-- 				</tr> -->
-<!-- 				<tr> -->
-<!-- 					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;"> -->
-<!-- 						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;">  -->
-<!-- 						<span>10</span> -->
-<!-- 					</td>  -->
-<!-- 				</tr> -->
-<!-- 	</table>  -->
-<!--    	<table class="groupTable2"  style="border:2px solid #ffab00; border-radius:2em;" > -->
-<!-- 				<tr> -->
-<!-- 					<td class="groupPic" rowspan ="3"> -->
-<!-- 						<img src="resources/assets/musical.jpg" class="gThumnail"> -->
-<!-- 					</td> -->
-<%-- 					<td class="groupTitle"><a href="${ contextPath }/groupDetailY.gr" class="groupLink">오페라의 유령</a></td> --%>
-<!-- 				</tr>				 -->
-<!-- 				<tr> -->
-<!-- 					<td class="groupIntro">오페라의 유령 얘기할 사람</td> -->
-<!-- 				</tr> -->
-<!-- 				<tr> -->
-<!-- 					<td style="text-align:right; padding-right:20px; height:80px;paddding-bottom:20px;"> -->
-<!-- 						<img src="resources/assets/heart.png" style="width:25px; height:25px; cursor:pointer;">  -->
-<!-- 						<span>10</span> -->
-<!-- 					</td>  -->
-<!-- 				</tr> -->
-<!-- 	</table>  -->
 				<nav aria-label="Standard pagination example" style="float: right;">
 					<ul class="pagination">
 	           				<li class="page-item">
@@ -234,9 +171,14 @@
 				const category = this.querySelector('.category-name').innerText;
 				console.log(category);
 				location.href="${contextPath}/selectCate.gr?category=" + category;
+				
 			})
 					
 		}
+		document.getElementById("noLogin").addEventListener('click', ()=>{
+			alert("로그인이 필요한 페이지 입니다.");
+			location.href="${contextPath}/login.me"
+		})
 		
 	}
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,13 +14,11 @@
 	}
 	
 	/* 버튼 css */
-	.button {
-	  margin-top : -30px;
-	  margin-left: 600px;
-	  width: 140px;
+	.deleteButton {
+	  width: 80px;
 	  height: 45px;
 	  font-family: 'Roboto', sans-serif;
-	  font-size: 15px;
+	  font-size: 12px;
 	  text-transform: uppercase;
 	  letter-spacing: 2.5px;
 	  font-weight: 500;
@@ -33,7 +32,7 @@
 	  outline: none;
 	  }
 	
-	.button:hover {
+	.deleteButton:hover {
 	  background-color: #FFAB00;
 	  color: #fff;
 	  transform: translateY(-7px);
@@ -96,7 +95,7 @@
 	.sel{width: 80px;}
 	.no{width: 80px;}
 	.date{width: 200px;}
-	.nick{width: 150px;}
+	.groupMemberId{width: 150px;}
 	.grade{width: 100px;}
 	.yn{width: 80px;}
 	.kick{background-color: black; color: white; border-radius: 5px; margin-left:80%}
@@ -104,6 +103,7 @@
 	.category{width:100px;}
 	.class{width:100px;}
 	.check{border:none;  background-color:white;}
+	.deleteGroupMember{width:80px;}
 </style>
 </head>
 
@@ -112,19 +112,6 @@
 	
 	<div class="div"> <!-- 제일 바깥쪽 여백 범위 위한 div -->
 		<div class="center-div" >
-			<div class="admin-menu">
-			 	<div>
-					<img id="profile-img" src="../photo/face.png">
-				</div>
-				<div class="admin-id">관리자아이디</div><br>
-				<div>
-					<button class="non-click"><i class="bi bi-grid-fill"></i> 대시보드</button>
-					<button class="non-click"><i class="bi bi-person-fill"></i> 회원관리</button>
-					<button class="non-click"><i class="bi bi-pencil-square"></i> 게시글 관리</button>
-					<button class="non-click"><i class="bi bi-people-fill"></i> 모임 관리</button>
-					<button class="non-click"><i class="bi bi-cart-fill"></i> 마켓 관리</button>
-				</div>
-			</div> <!-- admin-menu 닫기 -->
 			<div class="admin-board"> <!-- 모임 관리~버튼까지 div -->
 			 	<div class="div1"><br><br>
 		 	
@@ -135,117 +122,27 @@
 				</ul>
 				
 				<table style="width:750px">
-					<tr class="top" style="border-bottom: 2px solid lightgray;">
-						<th class="yn">선택</th>
-						<th class="no">멤버번호</th>
+					<tr class="top" style="border-bottom: 2px solid lightgray;">						
+						<th class="groupMemberId">아이디</th>
 						<th class="date">가입일</th>
-						<th class="nick">닉네임</th>
-						<th class="grade">등급</th>
-						<th class="form">가입 폼</th>
+						<th class="grade">등급</th>						
 						<th class="yn">활동</th>
+						<th class="delete">추방</th>
 					</tr>
-					<tr style="border-bottom: 2px solid lightgray;">
-						<td><input type="checkbox"></td>
-						<td>23</td>
-						<td>2023-04-05</td>
-						<td>뽀리</td>
-						<td>멤버</td>
-						<td><button class="check"><img src="resources/assets/docum.png" style="width:25px; height:25px"></button></td>
-						<td>Y</td>
-					</tr>
-					<tr style="border-bottom: 2px solid lightgray;">
-						<td><input type="checkbox"></td>
-						<td>23</td>
-						<td>2023-04-05</td>
-						<td>뽀리</td>
-						<td>멤버</td>
-						<td><button class="check"><img src="resources/assets/docum.png" style="width:25px; height:25px"></button></td>
-						<td>Y</td>
-					</tr>
-					<tr style="border-bottom: 2px solid lightgray;">
-						<td><input type="checkbox"></td>
-						<td>23</td>
-						<td>2023-04-05</td>
-						<td>뽀리</td>
-						<td>멤버</td>
-						<td><button class="check"><img src="resources/assets/docum.png" style="width:25px; height:25px"></button></td>
-						<td>Y</td>
-					</tr>
-					<tr style="border-bottom: 2px solid lightgray;">
-						<td><input type="checkbox"></td>
-						<td>23</td>
-						<td>2023-04-05</td>
-						<td>뽀리</td>
-						<td>멤버</td>
-						<td><button class="check"><img src="resources/assets/docum.png" style="width:25px; height:25px"></button></td>
-						<td>Y</td>
-					</tr>
-					<tr style="border-bottom: 2px solid lightgray;">
-						<td><input type="checkbox"></td>
-						<td>23</td>
-						<td>2023-04-05</td>
-						<td>뽀리</td>
-						<td>멤버</td>
-						<td><button class="check"><img src="resources/assets/docum.png" style="width:25px; height:25px"></button></td>
-						<td>Y</td>
-					</tr>
-					<tr style="border-bottom: 2px solid lightgray;">
-						<td><input type="checkbox"></td>
-						<td>23</td>
-						<td>2023-04-05</td>
-						<td>뽀리</td>
-						<td>멤버</td>
-						<td><button class="check"><img src="resources/assets/docum.png" style="width:25px; height:25px"></button></td>
-						<td>Y</td>
-					</tr>
-					<tr style="border-bottom: 2px solid lightgray;">
-						<td><input type="checkbox"></td>
-						<td>23</td>
-						<td>2023-04-05</td>
-						<td>뽀리</td>
-						<td>멤버</td>
-						<td><button class="check"><img src="resources/assets/docum.png" style="width:25px; height:25px"></button></td>
-						<td>Y</td>
-					</tr>
-					<tr style="border-bottom: 2px solid lightgray;">
-						<td><input type="checkbox"></td>
-						<td>23</td>
-						<td>2023-04-05</td>
-						<td>뽀리</td>
-						<td>멤버</td>
-						<td><button class="check"><img src="resources/assets/docum.png" style="width:25px; height:25px"></button></td>
-						<td>Y</td>
-					</tr>
-					<tr style="border-bottom: 2px solid lightgray;">
-						<td><input type="checkbox"></td>
-						<td>23</td>
-						<td>2023-04-05</td>
-						<td>뽀리</td>
-						<td>멤버</td>
-						<td><button class="check"><img src="resources/assets/docum.png" style="width:25px; height:25px"></button></td>
-						<td>Y</td>
-					</tr>
-					<tr style="border-bottom: 2px solid lightgray;">
-						<td><input type="checkbox"></td>
-						<td>23</td>
-						<td>2023-04-05</td>
-						<td>뽀리</td>
-						<td>멤버</td>
-						<td><button class="check"><img src="resources/assets/docum.png" style="width:25px; height:25px"></button></td>
-						<td>Y</td>
-					</tr>
-					<tr style="border-bottom: 2px solid lightgray;">
-						<td><input type="checkbox"></td>
-						<td>23</td>
-						<td>2023-04-05</td>
-						<td>뽀리</td>
-						<td>멤버</td>
-						<td><button class="check"><img src="resources/assets/docum.png" style="width:25px; height:25px"></button></td>
-						<td>Y</td>
-					</tr>
+					<c:forEach items="${ mList }" var="m"> 
+						<tr style="border-bottom: 2px solid lightgray;">
+							<td>${ m.memberId }</td>
+							<td>${ m.hireDate }</td>
+							<td>${ m.grade }</td>							
+							<td>${ m.status }</td>
+							<td>
+								<button class="deleteButton" type="button" style="width:50px; height:20px">추방
+							</button>
+						</tr>
+					</c:forEach>	
+					
 				</table>
 				<br>
-				&nbsp;&nbsp;&nbsp;&nbsp;<button class="button">멤버 추방</button>
 				</div>	 	
 			</div>
 		</div> <!-- center -->
@@ -273,12 +170,23 @@
 	</script>
 
 	<script>
-		const check = document.getElementsByClassName('check');
-		for(const checks of check) {
-			checks.addEventListener('click', function() {
-				location.href = "${ contextPath}/groupJoin.gr";
-			})	
+// 		const check = document.getElementsByClassName('check');
+// 		for(const checks of check) {
+// 			checks.addEventListener('click', function() {
+// 				location.href = "${ contextPath}/groupJoin.gr";
+// 			})	
+// 		}
+		
+		window.onload=()=>{
+			const deleteButtons = document.getElementsByClassName('deleteButton');
+			for(dbtn of deleteButtons){
+				dbtn.addEventListener('click',function(){					
+				 	const memberId = this.parentElement.parentElement.querySelector('td').innerText;				 
+				 	location.href="${contextPath}/deleteMember.gr?membershipNo=${membershipNo}&memberId=" + memberId;
+				})
+			}
 		}
+		
 		
 	</script>
 

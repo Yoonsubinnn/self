@@ -1,8 +1,12 @@
 package com.kh.gorri.member.model.dao;
 
+import java.util.ArrayList;
+
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.gorri.common.model.vo.PageInfo;
 import com.kh.gorri.member.model.vo.Member;
 
 @Repository
@@ -34,6 +38,18 @@ public class MemberDAO {
 
 	public int checkNick(SqlSessionTemplate sqlSession, String nickName) {
 		return sqlSession.selectOne("memberMapper.checkNick", nickName);
+	}
+
+	public int getListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.getListCount");
+	}
+
+	public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1 ) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		System.out.println(offset);
+		System.out.println(pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberList", null, rowBounds);
 	}
 
 //	public ArrayList<Member> findId(SqlSessionTemplate sqlSession, Member m) {

@@ -59,4 +59,18 @@
 		from users
 		where name= '#{userName}' and phone=#{phone}
 	</select>
+	
+	<!-- 관리자 페이지 회뭔수 -->
+	<select id = "getListCount" resultType="_int">
+	 select count(*)
+	 from users
+	</select>
+	
+	<!-- 관리자 페이지 회원 목록 -->
+	<select id="selectMemberList" resultMap="memberResultSet">
+		select *
+		from users
+		order by enrolldate desc
+	</select>
+	
 </mapper>
