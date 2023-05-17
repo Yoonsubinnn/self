@@ -167,6 +167,17 @@ public class GroupServiceImpl implements GroupService {
 	public ArrayList<Attachment> selectAttm(int boardNo) {
 		return gDAO.selectAttm(sqlSession, boardNo);
 	}
+	
+	// 수빈 : 모임 가입 
+	@Override
+	public int groupJoin(GroupMember gm) {
+		return gDAO.groupJoin(sqlSession, gm);
+	}
+
+	@Override
+	public int checkGroupAdmin(GroupMember gm) {
+		return gDAO.checkGroupAdmin(sqlSession, gm);
+	}
 
 	
 

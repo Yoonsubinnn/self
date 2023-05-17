@@ -154,5 +154,15 @@ public class GroupDAO {
 	public ArrayList<Attachment> selectAttm(SqlSessionTemplate sqlSession, int boardNo) {
 		return (ArrayList) sqlSession.selectList("groupMapper.selectAttm", boardNo);
 	}
+	
+	// 수빈 : 모임 가입
+	public int groupJoin(SqlSessionTemplate sqlSession, GroupMember gm) {
+		return sqlSession.insert("groupMapper.groupJoin", gm);
+	}
+	
+	// 모임장인지
+	public int checkGroupAdmin(SqlSessionTemplate sqlSession, GroupMember gm) {
+		return sqlSession.selectOne("groupMapper.checkGroupAdmin", gm);
+	}
 
 }

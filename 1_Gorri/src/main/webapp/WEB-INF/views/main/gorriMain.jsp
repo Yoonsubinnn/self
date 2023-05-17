@@ -14,6 +14,9 @@
 .divgap{gap: 50px 10px;}
 .bor{border: 1px solid black;}
 .title{font-weight: bold; display: inline-block; width: 200px;}
+.groupSelect:hover{
+	color:#ffab00;
+}
 </style>
 </head>
 <body>
@@ -104,12 +107,15 @@
 							<div class="card shadow-sm">
 								<c:forEach items="${ aList }" var="a">
 									<c:if test="${ g.membershipNo eq a.boardNo }">									
-										<a href=""><img src="${ contextPath }/resources/uploadFiles/${a.renameName}" class="img-fluid"></a>
+										<a href="${ contextPath }/selectGroupView.gr?membershipNo=${g.membershipNo}"><img src="${ contextPath }/resources/uploadFiles/${a.renameName}" class="img-fluid"></a>
 									</c:if>								
 								</c:forEach>
 								<div class="card-body">
 									<div class="sub-title">
-										<p class="title">${ g.membershipName }</p>
+										<p class="title groupSelect">
+											${ g.membershipName }
+											<input type="hidden" value="${g.membershipNo}">
+										</p>
 										<small class="d-inline-block">회원 인원 : ${ g.capacity }</small>
 										<div class="d-flex justify-content-between align-items-center">
 											<small class="text-muted">${ g.membershipContent }</small>
@@ -126,5 +132,22 @@
 	
 	<!-- 푸터 -->
 	<jsp:include page="../common/footer.jsp"/>
+	
+	<script>
+	 window.onload=()=>{
+		 const groupNames = document.getElementsByClassName('groupSelect');
+		 console.log(groupNames);
+		 for(groupName of groupNames){
+			 groupName.addEventListener('click',function(){
+				 const membershipNo = this.querySelector('input').value;
+				 console.log(this);
+				 console.log(membershipNo);
+				 location.href="${contextPath}/selectGroupView.gr?membershipNo=" + membershipNo;
+			 })
+		 }
+		 
+	 }
+	
+	</script>
 </body>
 </html>

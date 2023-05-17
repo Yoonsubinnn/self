@@ -266,6 +266,8 @@ public class GroupController {
 	         model.addAttribute("boardList", boardList); //게시글 
 	         model.addAttribute("status", checkStatus);
 	         model.addAttribute("adminStatus", checkAdmin);
+	         model.addAttribute("membershipNo", membershipNo);
+	         model.addAttribute("page", currentPage);
 	         return "group_yJoin";
 	      } else {
 	         return "groupMain2"; // 게시글 조회 실패 시 보여줄 화면 만들기
@@ -316,48 +318,7 @@ public class GroupController {
 			
 			
 			
-		}
-	   
-	   @RequestMapping(value="groupAdmin.gr")
-		public String groupAdmin(HttpServletRequest request, @RequestParam("membershipNo") int membershipNo,
-				@RequestParam(value="page", required=false) Integer page, Model model) {
-			
-			Member loginUser = (Member)request.getSession().getAttribute("loginUser");
-
-			
-			
-			int currentPage = 1;
-			if(page != null) {
-				currentPage = page;
-			}
-			
-			int memberCount = gService.getMemberCount(membershipNo);
-			PageInfo pi = Pagination.getPageInfo(currentPage, memberCount, 10);
-			
-			ArrayList<Member> mList = gService.getGroupMemberList(membershipNo, pi);
-			if(mList != null) {
-				model.addAttribute("pi", pi);
-				model.addAttribute("mList", mList);
-				model.addAttribute("membershipNo", membershipNo);
-				return "groupAdmin";
-				
-			} else {
-				throw new GroupException("모임 회원 조회를 실패했습니다.");
-			}
-		}
-	   
-	   // 모임 가입 페이지
-		@RequestMapping(value="groupJoin.gr")
-		public String groupJoin(@RequestParam("membershipNo") int membershipNo, Model model) {		
-			Attachment a = gService.getGroupPic(membershipNo);
-			Group membership = gService.getGroupInfo(membershipNo);
-			model.addAttribute("groupPic", a );
-			model.addAttribute("groupInfo", membership );
-			
-			return "groupJoin"; 
-		}
-		
-		
+		}	   
 		
 		@RequestMapping("deleteMember.gr")
 		public String deleteMember(@ModelAttribute GroupMember gc, Model model) {
@@ -456,5 +417,56 @@ public class GroupController {
 			return "redirect:groupDetailBoard.gr?page=" + currentPage + "&boardNo=" + newBoardNo;
 
 		}
+		
+		// 수빈 : 모임 가입 페이지 23.05.17
+		@RequestMapping(value = "groupJoin.gr")
+		public String groupJoin(@RequestParam("membershipNo") int membershipNo, @RequestParam("page") int page, HttpSession session, Model model) {
+			Member m = (Member)session.getAttribute("loginUser");
+			GroupMember gm = new GroupMember();
+			gm.setMemberId(m.getUserId());
+			gm.setMembershipNo(membershipNo);
+			int result = gService.groupJoin(gm);
+			if(result > 0) {				
+				return "redirect:selectGroupView.gr?membershipNo=" + membershipNo + "&page=" + page;
+			} else {
+				throw new GroupException("모임 가입에 실패했습니다");
+			}
+		}
+		
+		// 수빈 : 모임장 페이지 수정 23.05.17
+		@RequestMapping(value="groupAdmin.gr")
+		public String groupAdmin(@RequestParam("membershipNo") int membershipNo,
+								@RequestParam(value="page", required=false) Integer page, Model model, HttpSession session) {
+			
+		    Member loginUser = (Member)session.getAttribute("loginUser");
+		   	GroupMember gm = new GroupMember();
+		   	gm.setMemberId(loginUser.getUserId());
+			gm.setMembershipNo(membershipNo);
+			int result = gService.checkGroupAdmin(gm);		
+			
+			if(result > 0) {
+				int currentPage = 1;
+				if(page != null) {
+					currentPage = page;
+				}
+				
+				int memberCount = gService.getMemberCount(membershipNo);
+				PageInfo pi = Pagination.getPageInfo(currentPage, memberCount, 10);
+				
+				ArrayList<Member> mList = gService.getGroupMemberList(membershipNo, pi);
+				if(mList != null) {
+					model.addAttribute("pi", pi);
+					model.addAttribute("mList", mList);
+					model.addAttribute("membershipNo", membershipNo);
+					return "groupAdmin";
+					
+				} else {
+					throw new GroupException("모임 회원 조회를 실패했습니다.");
+				}
+				
+			} else {
+				throw new GroupException("잘못된 접근입니다");
+			}
+		}		
 		
 }

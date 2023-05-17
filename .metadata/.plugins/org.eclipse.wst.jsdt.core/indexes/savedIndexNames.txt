@@ -1,8 +1,0 @@
-INDEX VERSION 1.4+C:\D\gorriPogi\gorri\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-774356637.index
-1675833502.index
-3132830899.index
-2715721095.index
-1754570632.index
-1588378811.index
-1044656920.index

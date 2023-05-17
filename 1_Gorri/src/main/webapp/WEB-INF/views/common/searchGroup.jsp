@@ -30,11 +30,11 @@
 				<li><a class="dropdown-item cateSel">모임장</a></li>
 				<li><a class="dropdown-item cateSel">모임명</a></li>
 			</ul>
-			<input type="hidden" name="searchCate" id="searchCate">
 
-			<form class="d-flex" role="search">
+			<form class="d-flex" role="search" action="${contextPath}/searchGroup.gr">
+				<input type="hidden" name="searchCate" id="searchCate">
 		        <input class="form-control me-2" type="search" placeholder="Search" name="searchWord" style="width:350px; border: 1px solid lightgrey;" id="searchWord">
-		        <button class="btn btn-outline-success" type="button" style="background-color:gray; color:white; border:black" id="groupSearch" >Search</button>
+		        <button class="btn btn-outline-success" type="submit" style="background-color:gray; color:white; border:black" id="groupSearch" >Search</button>
 			</form>
 		</div>
 	</div>
@@ -54,15 +54,14 @@
 		  
 		  handleSelect(this);
 		  document.getElementById('searchCate').value=this.innerText;
-		  console.log(document.getElementById('searchCate').value);
 		 })
 	})
 	
-	document.getElementById('groupSearch').addEventListener('click', ()=>{
-		const searchCate = document.getElementById('searchCate').value;
-		const searchWord = document.getElementById('searchWord').value;
-		location.href="${contextPath}/searchGroup.gr?searchCate=" + searchCate + "&searchWord=" + searchWord;
-	})
+// 	document.getElementById('groupSearch').addEventListener('click', ()=>{
+// 		const searchCate = document.getElementById('searchCate').value;
+// 		const searchWord = document.getElementById('searchWord').value;
+// 		location.href="${contextPath}/searchGroup.gr?searchCate=" + searchCate + "&searchWord=" + searchWord;
+// 	})
 	</script>
 
 </body>

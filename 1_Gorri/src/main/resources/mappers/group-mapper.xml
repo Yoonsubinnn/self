@@ -170,7 +170,7 @@
 	<select id="getGroupMemberList" resultMap="GroupMemberResultSet">
 		select *
 		from member
-		where membership_no=#{membershipNo}
+		where membership_no=#{membershipNo} and grade='회원'
 	</select>
 	
 	<resultMap type="com.kh.gorri.group.model.vo.GroupMember" id="GroupMemberResultSet">
@@ -249,6 +249,18 @@
 		select *
 		from attachment
 		where board_no = #{boardNo}
+	</select>
+	
+	<!-- 수빈 : 모임 가입 -->
+	<insert id="groupJoin">
+		insert into member values(#{memberId}, #{membershipNo}, '회원', sysdate, default)
+	</insert>
+	
+	<!-- 수빈 : 모임장인지 -->
+	<select id="checkGroupAdmin" resultType = "_int">
+		select count(*)
+		from member
+		where membership_no = #{membershipNo} and grade = '모임장' and users_Id = #{memberId}
 	</select>
 	
 </mapper>

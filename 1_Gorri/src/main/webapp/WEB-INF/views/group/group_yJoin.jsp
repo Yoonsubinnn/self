@@ -70,7 +70,7 @@
 
 <hr style="border:solid 10px black; margin:auto; width:30%; border-width:2px;"> <!-- 모임명 중앙 선 -->
 <br><br><br>
-
+   
    <table width="60%" style="margin-top:200px; margin:auto; text-align:center; "> 
        <tr>
            <td>
@@ -95,13 +95,18 @@
 					
 					<!-- 가입자X 화면  -->
 					<c:if test="${status <= 0}">
-					    <br><button class="button" style=""><b>가입하기</button>
+						<c:if test="${ empty loginUser }">
+		 					<br><button class="button" id="noLogin"><b>가입하기</button>
+						</c:if>		
+						<c:if test="${ !empty loginUser }">
+		 					<br><button class="button" onclick="location.href='${contextPath}/groupJoin.gr?membershipNo=${ membershipNo }&page=${ page }'" style=""><b>가입하기</button>
+						</c:if>					    
 					</c:if>
                    
                		<!-- 가입자O/관리자O 화면 -->
                		 <c:if test="${adminStatus > 0}">
 				   		<br><br><a href="${ contextPath }/groupUpdate.gr"><button class="button"><b>모임 수정</button></a>
-						&nbsp; &nbsp; <a href="${ contextPath }/groupAdmin.gr"><button class="button"><b>회원 관리</button></a>	
+						&nbsp; &nbsp; <a href="${ contextPath }/groupAdmin.gr?membershipNo=${membershipNo}"><button class="button"><b>회원 관리</button></a>	
 				     </c:if>
                		
                  </div> <!-- 1번째 블럭 끝  -->
@@ -202,6 +207,7 @@
       
       //게시글 상세보기 
          window.onload = () => {
+        	
             const tbody = document.getElementById('tbody');
             console.log(tbody);
             const tds = tbody.querySelectorAll('td');
@@ -233,6 +239,12 @@
             	console.log(${list[0].membershipNo})
                 window.location.href = "${contextPath}/groupBoardWrite.gr?membershipNo=" + ${list[0].membershipNo} + "&page=" + ${pi.currentPage};
               });
+            
+            // 로그인 안한 사람은 먼저 로그인 하게
+            document.getElementById("noLogin").addEventListener('click', ()=>{
+			alert("로그인이 필요한 페이지 입니다.");
+			location.href="${contextPath}/login.me"
+			})
             
             
       }

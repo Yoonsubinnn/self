@@ -75,6 +75,13 @@ public interface GroupService {
 
 	// 모임 게시글 사진 조회
 	ArrayList<Attachment> selectAttm(int boardNo);
+	
+	// 수빈: 모임 가입
+	int groupJoin(GroupMember gm);
+
+	int checkGroupAdmin(GroupMember gm);
+
+
 
 	
 

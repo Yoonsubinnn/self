@@ -231,6 +231,18 @@
 		
 		
 	}
+	
+	const groupTable = document.getElementsByClassName('groupTable2');
+	   
+    for(let groupTables of groupTable) {
+       groupTables.addEventListener('click', function() {
+          console.log('asdf');
+          const membershipNo = this.querySelector('input').value; //membershipNo
+          location.href = "${contextPath}/selectGroupView.gr?membershipNo=" + membershipNo;
+          
+          
+       })
+    }
 
 </script>
 </body>

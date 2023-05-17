@@ -118,7 +118,7 @@
 				</tr>
 				<tr>
 					<td colspan="4" style="padding-left:30px; padding-right:10px; padding-top:10px;">
-						<input name="membershipContent" class="form-control me-2" placeholder="모임 한줄 소개" style="width:100%; border: 1px solid lightgrey;" required>
+						<input name="membershipContent" class="form-control me-2" placeholder="모임 한줄 소개" style="width:100%; border: 1px solid lightgrey;" maxlength="20" required>
 					</td>
 				</tr>
 			</table>

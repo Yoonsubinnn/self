@@ -31,14 +31,14 @@
 			<h2 class="card-title text-center" style="color:#113366;">로그인 폼</h2>
 		</div>
 		<div class="card-body">
-      <form class="form-signin" method="POST">
+      <form class="form-signin" action="${ contextPath }/loginConfirm.me" method="POST">
         <h5 class="form-signin-heading">로그인 정보를 입력하세요</h5>
         <label for="inputEmail" class="sr-only">Your ID</label>
-        <input type="text" id="uid" class="form-control" placeholder="Your ID" required autofocus><BR>
+        <input name="userId" type="text" id="uid" class="form-control" placeholder="Your ID" required autofocus><BR>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="upw" class="form-control" placeholder="Password"required><br>
+        <input name="userPwd" type="password" id="upw" class="form-control" placeholder="Password"required><br>
        
-        <button id="loginSubmit" class="btn btn-lg btn-primary btn-block" style="background-color:#ffab00; border:none;" type="button">로 그 인</button><br>
+        <button id="loginSubmit" class="btn btn-lg btn-primary btn-block" style="background-color:#ffab00; border:none;" type="submit">로 그 인</button><br>
         
         <a href="${contextPath}/join.me">
          <button id="joinSubmit" class="btn btn-lg btn-primary btn-block" style="background-color:#ffab00; border:none;" type="button">회 원 가 입</button>
@@ -66,6 +66,13 @@
   		console.log(userPwd);
   		location.href="${ contextPath }/loginConfirm.me?userId=" + userId +"&userPwd=" + userPwd;
   	})
+  	
+  	document.addEventListener("keydown", (e)=>{
+  		if(e.key == 'Enter'){
+  			console.log(document.querySelector('form'));
+  			document.querySelector('form').submit();
+  		}
+  	});
   
   </script>
   
