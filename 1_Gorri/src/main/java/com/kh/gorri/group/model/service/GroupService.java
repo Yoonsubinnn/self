@@ -53,7 +53,28 @@ public interface GroupService {
 
 	int deleteMember(GroupMember gc);
 
+	ArrayList<Group> getMainGroupList();
 
+	// 0517 가입 여부
+	int checkStatus(String login, int membershipNo);
+
+	// 0517 관리자 여부
+	int checkAdmin(String login, int membershipNo);
+
+	// 0517 상세글 보기
+	GroupBoard selectDetailBoard(int boardNo);
+
+	// 0517글 등록
+	int insertBoard(GroupBoard groupBoard);
+
+	// 최신 글번호 조회 (등록 후 상세글로 가기 위함)
+	int selectNewBoardNo(String id);
+
+	// 모임 게시글 사진 첨부
+	int insertGroupAttm(Attachment attachment);
+
+	// 모임 게시글 사진 조회
+	ArrayList<Attachment> selectAttm(int boardNo);
 
 	
 

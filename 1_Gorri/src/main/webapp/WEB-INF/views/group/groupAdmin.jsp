@@ -137,7 +137,7 @@
 							<td>${ m.status }</td>
 							<td>
 								<button class="deleteButton" type="button" style="width:50px; height:20px">추방
-							</button>
+							</button></td>
 						</tr>
 					</c:forEach>	
 					

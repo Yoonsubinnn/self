@@ -1,6 +1,8 @@
 package com.kh.gorri.group.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.ibatis.session.RowBounds;
@@ -113,6 +115,44 @@ public class GroupDAO {
 
 	public int deleteMember(SqlSessionTemplate sqlSession, GroupMember gc) {
 		return sqlSession.update("groupMapper.deleteMember", gc);
+	}
+
+	public ArrayList<Group> getMainGroupList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("groupMapper.getMainGroupList");
+	}
+
+	public int checkStatus(SqlSessionTemplate sqlSession, String login, int membershipNo) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("login", login);
+		paramMap.put("membershipNo", membershipNo);
+		return sqlSession.selectOne("groupMapper.checkStatus", paramMap);
+	}
+
+	public int checkAdmin(SqlSessionTemplate sqlSession, String login, int membershipNo) {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("login", login);
+		paramMap.put("membershipNo", membershipNo);
+		return sqlSession.selectOne("groupMapper.checkAdmin", paramMap);
+	}
+
+	public GroupBoard selectDetailBoard(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.selectOne("groupMapper.selectDetailBoard", boardNo);
+	}
+
+	public int insertBoard(SqlSessionTemplate sqlSession, GroupBoard groupBoard) {
+		return sqlSession.insert("groupMapper.insertBoard", groupBoard);
+	}
+
+	public int selectNewBoardNo(SqlSessionTemplate sqlSession, String id) {
+		return sqlSession.selectOne("groupMapper.selectNewBoardNo", id);
+	}
+
+	public int insertGroupAttm(SqlSessionTemplate sqlSession, Attachment attachment) {
+		return sqlSession.insert("groupMapper.insertGroupAttm", attachment);
+	}
+
+	public ArrayList<Attachment> selectAttm(SqlSessionTemplate sqlSession, int boardNo) {
+		return (ArrayList) sqlSession.selectList("groupMapper.selectAttm", boardNo);
 	}
 
 }

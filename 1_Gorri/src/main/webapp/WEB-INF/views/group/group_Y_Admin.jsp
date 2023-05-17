@@ -83,7 +83,7 @@
 	        		<br><p img src="">카테고리 표시</p> <!-- 설정한 카테고리에 맞는 카테고리와 아이콘 보임 -->
 	        		<div style="border-radius:2em; margin:0 auto; width:290px; height:100px; border:1px solid #FFAA00; padding:15px;">여기는 행복한 모임입니다! 맛집도 가고 친목도 다지는 그런 모임 다들 들어오세요!</div> <!-- 모임 소개 글 --> 
        	 			<br>
-       	 			<a href="${ contextPath }/groupUpdate.gr"><button class="button"><b>모임 수정</button></a>
+       	 			<a href="${ contextPath }/groupUpdate.gr?membershipNo=125"><button class="button"><b>모임 수정</button></a>
 					<a href="${ contextPath }/groupAdmin.gr?membershipNo=125"><button class="button"><b>회원 관리</button></a>
        	 		</div> <!-- 1번째 블럭 끝  -->
        	 	</td> <!-- 1번째 블럭 끝 -->

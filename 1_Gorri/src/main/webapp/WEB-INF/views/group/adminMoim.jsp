@@ -96,6 +96,38 @@
 		transform: translateY(-7px);
 		}
 	
+	#pageTable{
+		width:40%;
+		margin-top:20px;
+		margin-left:350px;
+		border: none;
+	}
+	.paging{
+		text-decoration:none;
+		font-size:15px;
+		font-weight:bold;
+		color:grey;
+	}
+	
+	.paging:hover{
+		text-decoration:none;
+		font-size:15px;
+		font-weight:bold;
+		color:#ffab00;
+	}
+	.selectPage{
+		text-decoration:none;
+		font-size:15px;
+		font-weight:bold;
+		color:black;
+	}
+	.selectPage:hover{
+		text-decoration:none;
+		font-size:15px;
+		font-weight:bold;
+		color:black;
+		cursor:default;
+	}
 	
 	
 </style>
@@ -127,7 +159,7 @@
 					<ul>
 						<li>모임 관리</li>
 					</ul>
-					<table style="width:1000px">
+					<table style="width:1000px; border-bottom-color:white;">
 						<tr class="top">
 							<th class="no">번호</th>
 							<th class="grade">카테고리</th>
@@ -144,13 +176,53 @@
 								<td>${ g.capacity }</td>
 							</tr>
 						</c:forEach>	
-					</table>
+					</table><br>
+					<table align="center" id="pageTable">
+									<tr style="border-bottom: none;">
+										<!-- 앞으로 가기 -->
+										<c:url var="goBack" value="${ loc }">
+											<c:param name="page" value="${ pi.currentPage-1 }"></c:param>
+										</c:url>
+										<td><c:if test="${ pi.currentPage > 1 }">
+												<a class="paging" href="${ goBack }">&laquo;</a>
+											</c:if> <c:if test="${ pi.currentPage <= 1 }">
+												<a class="paging" style="color: lightgrey; cursor: default;">&laquo;</a>
+											</c:if></td>
+										<!-- 페이지 -->
+										<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }"
+											var="p">
+											<c:url var="goNum" value="${ loc }">
+												<c:param name="page" value="${ p }"></c:param>
+											</c:url>
+
+											<c:if test="${ pi.currentPage eq p }">
+												<td><a class="selectPage">${ p }</a></td>
+											</c:if>
+											<c:if test="${ !( pi.currentPage eq p ) }">
+												<td><a class="paging" href="${goNum}">${ p }</a></td>
+											</c:if>
+
+										</c:forEach>
+										<!-- 뒤로가기 -->
+										<c:url var="goNext" value="${ loc }">
+											<c:param name="page" value="${ pi.currentPage+1 }"></c:param>
+										</c:url>
+										<td><c:if test="${ pi.currentPage < pi.endPage }">
+												<a class="paging" href="${ goNext }">&raquo;</a>
+											</c:if> <c:if test="${ pi.currentPage >= pi.endPage }">
+												<a class="paging" style="color: lightgrey; cursor: default;">&raquo;</a>
+											</c:if></td>
+									</tr>
+						</table>
 					<br>					
 				</div>
+	
 			</div>
 			
 		</div>
 	</div>
+
+
 	<br><br><br>
 
 

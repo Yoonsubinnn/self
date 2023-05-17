@@ -121,6 +121,52 @@ public class GroupServiceImpl implements GroupService {
 		return gDAO.deleteMember(sqlSession, gc);
 	}
 
+	@Override
+	public ArrayList<Group> getMainGroupList() {
+		return gDAO.getMainGroupList(sqlSession);
+	}
+
+	// 가입자 여부
+	@Override
+	public int checkStatus(String login, int membershipNo) {
+		return gDAO.checkStatus(sqlSession, login, membershipNo);
+	}
+
+	// 관리자 여부
+	@Override
+	public int checkAdmin(String login, int membershipNo) {
+		return gDAO.checkAdmin(sqlSession, login, membershipNo);
+	}
+
+	// 상세글 보기
+	@Override
+	public GroupBoard selectDetailBoard(int boardNo) {
+		return gDAO.selectDetailBoard(sqlSession, boardNo);
+	}
+
+	// 글 등록
+	@Override
+	public int insertBoard(GroupBoard groupBoard) {
+		return gDAO.insertBoard(sqlSession, groupBoard);
+	}
+
+	// 최신 글번호 조회
+	@Override
+	public int selectNewBoardNo(String id) {
+		return gDAO.selectNewBoardNo(sqlSession, id);
+	}
+
+	// 모임 게시글 사진 첨부
+	@Override
+	public int insertGroupAttm(Attachment attachment) {
+		return gDAO.insertGroupAttm(sqlSession, attachment);
+	}
+
+	// 모임 게시글 사진 조회
+	@Override
+	public ArrayList<Attachment> selectAttm(int boardNo) {
+		return gDAO.selectAttm(sqlSession, boardNo);
+	}
 
 	
 

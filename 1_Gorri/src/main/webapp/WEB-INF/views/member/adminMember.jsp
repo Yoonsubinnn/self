@@ -67,9 +67,9 @@
 	.top{background-color: rgba(250, 170, 0, 0.3);}
 	.sel{width: 80px;}
 	.no{width: 80px;}
-	.date{width: 200px;}
-	.nick{width: 150px;}
-	.grade{width: 100px;}
+	.date{width: 400px;}
+	.nick{width: 200px;}
+	.grade{width: 150px;}
 	.yn{width: 80px;}	
 	
 	.button{margin-left: 600px;}	
@@ -94,7 +94,62 @@
 		color: #fff;
 		transform: translateY(-7px);
 		}
+	#pageTable{
+		width:300px;
+		margin-left:300px;
+		margin-right:300px;
+		border: none;
+	}
+	.paging{
+		text-decoration:none;
+		font-size:15px;
+		font-weight:bold;
+		color:grey;
+	}
 	
+	.paging:hover{
+		text-decoration:none;
+		font-size:15px;
+		font-weight:bold;
+		color:#ffab00;
+	}
+	.selectPage{
+		text-decoration:none;
+		font-size:15px;
+		font-weight:bold;
+		color:black;
+	}
+	.selectPage:hover{
+		text-decoration:none;
+		font-size:15px;
+		font-weight:bold;
+		color:black;
+		cursor:default;
+	}
+	
+	.deleteButton {
+	  width: 80px;
+	  height: 45px;
+	  font-family: 'Roboto', sans-serif;
+	  font-size: 12px;
+	  text-transform: uppercase;
+	  letter-spacing: 2.5px;
+	  font-weight: 500;
+	  color: #000;
+	  background-color: #fff;
+	  border: white;
+	  border-radius: 45px;
+	  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+	  transition: all 0.3s ease 0s;
+	  cursor: pointer;
+	  outline: none;
+	  }
+	
+	.deleteButton:hover {
+	  background-color: #FFAB00;
+	  color: #fff;
+	  transform: translateY(-7px);
+	}
 	
 </style>
 </head>
@@ -125,14 +180,14 @@
 					<ul>
 						<li>회원 관리</li>
 					</ul>
-					<table>
+					<table style="width:900px;">
 						<tr class="top">
 							<th class="nick">아이디</th>
 							<th class="date">비밀번호 찾기 질문</th>
-							<th class="date">비밀번호 찾기 답</th>
-							<th class="date">가입일</th>
+							<th class="nick">비밀번호 찾기 답</th>
+							<th class="nick">가입일</th>
 							<th class="yn">활동</th>
-							<th> 추방 </th>>
+							<th class="grade"> 추방 </th>>
 						</tr>
 						<c:forEach items="${ mList }" var="m">
 							<tr class="tr-hover">	
@@ -141,41 +196,60 @@
 								<td>${ m.pwdHint }</td>
 								<td>${ m.enrollDate }</td>
 								<td>${ m.status }</td>
-								<td><button style="width:40px; height:20px; font-size:10px;" id="deleteUser">추방</button></td>
+								<td>
+									<button class="deleteButton" type="button" style="width:50px; height:20px">추방</button>
+								</td>
 							</tr>	
 							
 						</c:forEach>						
 					</table>
 					<br>
+					<table align="center" id="pageTable">
+									<tr style="border-bottom: none;">
+										<!-- 앞으로 가기 -->
+										<c:url var="goBack" value="${ loc }">
+											<c:param name="page" value="${ pi.currentPage-1 }"></c:param>
+										</c:url>
+										<td><c:if test="${ pi.currentPage > 1 }">
+												<a class="paging" href="${ goBack }">&laquo;</a>
+											</c:if> <c:if test="${ pi.currentPage <= 1 }">
+												<a class="paging" style="color: lightgrey; cursor: default;">&laquo;</a>
+											</c:if></td>
+										<!-- 페이지 -->
+										<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }"
+											var="p">
+											<c:url var="goNum" value="${ loc }">
+												<c:param name="page" value="${ p }"></c:param>
+											</c:url>
 
-					<nav aria-label="Standard pagination example" style="float: right;">
-						<ul class="pagination">
-							<li class="page-item"><c:url value="${ loc }" var="goBack">
-									<c:param name="page" value="${ pi.currentPage -1 }" />
-								</c:url> <a class="page-link" href="${ goBack }" aria-label="Previous">
-									<span aria-hidden="true">&laquo;</span>
-							</a></li>
+											<c:if test="${ pi.currentPage eq p }">
+												<td><a class="selectPage">${ p }</a></td>
+											</c:if>
+											<c:if test="${ !( pi.currentPage eq p ) }">
+												<td><a class="paging" href="${goNum}">${ p }</a></td>
+											</c:if>
 
-							<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }"
-								var="p">
-								<c:url var="goNum" value="${ loc }">
-									<c:param name="page" value="${ p }" />
-								</c:url>
-								<li class="page-item"><a class="page-link"
-									href="${ goNum }">${ p }</a></li>
-							</c:forEach>
-
-							<li class="page-item"><c:url value="${ loc }" var="goNext">
-									<c:param name="page" value="${ pi.currentPage + 1 }" />
-								</c:url> <a class="page-link" href="${ goNext }" aria-label="Next">
-									<span aria-hidden="true">&raquo;</span>
-							</a></li>
-						</ul>
-					</nav>					
+										</c:forEach>
+										<!-- 뒤로가기 -->
+										<c:url var="goNext" value="${ loc }">
+											<c:param name="page" value="${ pi.currentPage+1 }"></c:param>
+										</c:url>
+										<td><c:if test="${ pi.currentPage < pi.endPage }">
+												<a class="paging" href="${ goNext }">&raquo;</a>
+											</c:if> <c:if test="${ pi.currentPage >= pi.endPage }">
+												<a class="paging" style="color: lightgrey; cursor: default;">&raquo;</a>
+											</c:if></td>
+									</tr>
+						</table>
+										
 				</div>
 			</div>
 		</div>
 	</div>
+
+
+	
+
 	<br><br><br>
 
 

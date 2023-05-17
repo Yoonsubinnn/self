@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -86,8 +87,23 @@
                  <div 
                     style="border-radius:2em; margin:0 auto; width:290px; height:100px; 
                     border:1px solid #FFAA00; padding:35px;">${ list[0].membershipContent }</div> <!-- 모임 소개 글 --> 
-                    <br><button class="button" style=""><b>모임장 프로필</button>
-               
+                    
+                    <!-- 가입자O/관리자X 화면 -->
+                    <c:if test="${adminStatus <= 0 && status > 0}">
+					    <br><button class="button" style=""><b>모임장 프로필</button>
+					</c:if>
+					
+					<!-- 가입자X 화면  -->
+					<c:if test="${status <= 0}">
+					    <br><button class="button" style=""><b>가입하기</button>
+					</c:if>
+                   
+               		<!-- 가입자O/관리자O 화면 -->
+               		 <c:if test="${adminStatus > 0}">
+				   		<br><br><a href="${ contextPath }/groupUpdate.gr"><button class="button"><b>모임 수정</button></a>
+						&nbsp; &nbsp; <a href="${ contextPath }/groupAdmin.gr"><button class="button"><b>회원 관리</button></a>	
+				     </c:if>
+               		
                  </div> <!-- 1번째 블럭 끝  -->
               </td> <!-- 1번째 블럭 끝 -->
            
@@ -96,9 +112,13 @@
            <td> <!-- 3번째 블럭 -->
               <div style=" border:3px solid #FFAA00; position:relative; width:500px; height:600px; border-radius: 2em;">
                  <h4 style="text-align:center;"><br>모임 일정 확인</h4><hr style="width:80%; margin:auto"></p>
-                 <div style="transform:scale(0.6); position:absolute; margin:0 auto;"><a href="calendar.jsp" style="color:inherit; text-decoration: none;"><%@include file="calendar2.jsp" %></a></div>
-                    <a href="${ contextPath }/calendar.gr"><button class="button" id="calUI" style="margin-top:450px;"><b>일정 보기</button></a>
-                    
+                 <div style="transform:scale(0.6); position:absolute; margin:0 auto;"><%@include file="calendar2.jsp" %></div>
+                   
+                   <!-- 모임 가입 여부에 따라 일정 보기 버튼 유무 -->
+                    <c:if test="${status > 0}">
+				   		 <button class="button" id="calUI" style="margin-top:450px;"><b>일정 보기</button></a> 	
+				   </c:if>
+                   
               </div>
            </td>
         
@@ -110,7 +130,7 @@
    <!-- 게시글  -->
    <br><br><br>
    <div style="position:relative;">
-      <table style="margin:0 auto; id="boardList">
+      <table style="margin:0 auto; id="bList">
          <thead>
             <tr class="top">
                <th class="no">번호</th>
@@ -119,7 +139,7 @@
                <th class="date">작성일자</th>
             </tr>
          </thead>
-         <tbody>
+         <tbody id="tbody">
             <c:forEach items="${ boardList }" var="b">
                <tr style="border-bottom: 2px solid lightgray;">
                   <td>${ b.boardNo }</td>
@@ -131,7 +151,18 @@
          </tbody>   
       </table>
    </div>
-   <br><div style="position:absolute; margin: 30px; right:300px; top:1200px"><button onclick="writeBoard()" >작성하기</button></div>
+   <br>
+   
+   <div style="position:absolute; margin: 30px; right:300px; top:1200px">
+   
+   <!-- 미가입자/가입자 화면 나누기 : 글 작성하기  -->
+  <c:if test="${status > 0}">
+    	<div style="margin: 30px; right:300px; top:500px">
+    		<button id="writeBoard">작성하기</button>
+    	</div>
+  </c:if>
+  
+  <!-- 페이징 -->
    <br>
     <nav aria-label="Standard pagination example" style="position:absolute; margin:0 auto;">
           <ul class="pagination">
@@ -161,35 +192,49 @@
             </li>
        </ul>
      </nav>
-   
-   <br><br><br><br><br><br>
-   <%@include file="../common/footer.jsp" %>
+   </div>
+   <br><br><br><br>
+  <br><br><br><%@include file="../common/footer.jsp" %>
 
    
    <script>
-      document.getElementById("calUI").addEventListener("click", function() {
-           window.location.href = "calendar.jsp";
-         });
+      
       
       //게시글 상세보기 
          window.onload = () => {
-            
-            const tbody = document.getElementById('boardList').querySelector('tbody'); 
+            const tbody = document.getElementById('tbody');
+            console.log(tbody);
             const tds = tbody.querySelectorAll('td');
-            for(const td of tds) {
-               td.addEventListener('click', function() { 
-                  const trTds = this.parentElement.children;
-                  console.log(trTds);
-                  const boardNo = trTds[0].innerText; //bId 
-//                   console.log(boardId);
-                  const usersId = trTds[2].innerText; //writer
-                  const groupNo = ${list[0].membershipNo };
-                  location.href='${ contextPath}/groupDetailBoard.gr?boardNo=' + boardNo + '&usersId=' + usersId + '&page=' + ${pi.currentPage} + '&groupNo=' + groupNo;
-                  
-            });
+            console.log(tds);
+            if(${ status > 0 }) { //가입 여부에 따라 게시글 상세 보기 가능 여부 
+            	 for(const td of tds) {
+                 	console.log(td);
+                    td.addEventListener('click', function() { 
+                       const trTds = this.parentElement.children;
+                       console.log("asdf : " + trTds);
+                       const boardNo = trTds[0].innerText; //bId 
+                       console.log(boardNo);
+                       const usersId = trTds[2].innerText; //writer
+                       const groupNo = ${list[0].membershipNo };
+                       location.href='${ contextPath}/groupDetailBoard.gr?boardNo=' + boardNo + '&page=' + ${pi.currentPage};
+                       
+                 });
+              } 	
+            }
             
-         }
-         
+       //달력 보기 
+//       document.getElementById("calUI").addEventListener("click", function() {
+//           window.location.href = "calendar.jsp";
+//           });
+            
+            
+            //글 작성하기 버튼 누르면 글 작성 페이지로 이동 -> 
+            document.getElementById("writeBoard").addEventListener("click", function() {
+            	console.log(${list[0].membershipNo})
+                window.location.href = "${contextPath}/groupBoardWrite.gr?membershipNo=" + ${list[0].membershipNo} + "&page=" + ${pi.currentPage};
+              });
+            
+            
       }
    </script>
    

@@ -78,6 +78,40 @@
 	a.groupLink:hover{
 		color:#ffab00
 	}
+	
+	#pageTable{
+		width:300px;
+		margin-top:100px;
+		margin-left:300px;
+		margin-right:300px;
+		border: none;
+	}
+	.paging{
+		text-decoration:none;
+		font-size:25px;
+		font-weight:bold;
+		color:grey;
+	}
+	
+	.paging:hover{
+		text-decoration:none;
+		font-size:25px;
+		font-weight:bold;
+		color:#ffab00;
+	}
+	.selectPage{
+		text-decoration:none;
+		font-size:25px;
+		font-weight:bold;
+		color:black;
+	}
+	.selectPage:hover{
+		text-decoration:none;
+		font-size:25px;
+		font-weight:bold;
+		color:black;
+		cursor:default;
+	}
 </style>
 </head>
 <body>
@@ -130,33 +164,54 @@
 	   	</c:if>
    	</c:forEach>
    	
-   		<table>
-   			<tr>
-   				<td></td>
-   				<td></td>
-   				<td></td>
-   			</tr>   		
-   		</table>
-		<nav aria-label="Standard pagination example" style="float: right;">
-			<ul class="pagination">
-				<li class="page-item"><c:url var="goBack" value="${ loc }">
-						<c:param name="page" value="${ pi.currentPage-1 }"></c:param>
-					</c:url> <a class="page-link" href="${ goBack }" aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-				</a></li>
-				<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-					<c:url var="goNum" value="${ loc }">
-						<c:param name="page" value="${ p }"></c:param>
-					</c:url>
-					<li class="page-item"><a class="page-link" href="${ goNum }">${ p }</a></li>
-				</c:forEach>
-				<li class="page-item"><c:url var="goNext" value="${ loc }">
-						<c:param name="page" value="${ pi.currentPage+1 }"></c:param>
-					</c:url> <a class="page-link" href="${ goNext }" aria-label="Next"> <span
-						aria-hidden="true">&raquo;</span>
-				</a></li>
-			</ul>
-		</nav>
+   		
+   				<table align="center" id="pageTable">
+   					<tr>
+   						<!-- 앞으로 가기 -->
+   						<c:url var="goBack" value="${ loc }">
+	            				<c:param name="page" value="${ pi.currentPage-1 }"></c:param>
+	            		</c:url>	
+   						<td>
+   							<c:if test="${ pi.currentPage > 1 }">
+   								<a class="paging" href="${ goBack }">&laquo;</a>
+   							</c:if>
+   							<c:if test="${ pi.currentPage <= 1 }">
+   								<a class="paging" style="color:lightgrey; cursor:default;" >&laquo;</a>
+   							</c:if>	
+   						</td>
+   						<!-- 페이지 -->
+   						<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+   							<c:url var="goNum" value="${ loc }">
+	           					<c:param name="page" value="${ p }"></c:param>
+	           				</c:url>
+	           				
+	           				<c:if test="${ pi.currentPage eq p }">
+	           				<td>
+	           					<a class="selectPage">${ p }</a>
+	           				</td>
+	           				</c:if>
+	           				<c:if test="${ !( pi.currentPage eq p ) }">
+	           				<td>
+	           					<a class="paging" href="${goNum}">${ p }</a>
+	           				</td>
+	           				</c:if>
+   						
+   						</c:forEach>
+   						<!-- 뒤로가기 -->
+   						<c:url var="goNext" value="${ loc }">
+	            				<c:param name="page" value="${ pi.currentPage+1 }"></c:param>
+	            		</c:url>	
+   						<td>
+   							<c:if test="${ pi.currentPage < pi.endPage }">
+   								<a class="paging" href="${ goNext }">&raquo;</a>
+   							</c:if>
+   							<c:if test="${ pi.currentPage >= pi.endPage }">
+   								<a class="paging" style="color:lightgrey; cursor:default;">&raquo;</a>
+   							</c:if>
+   						</td>
+   					</tr>
+   				</table>
+   				
 	</div>
 <%@include file = "../common/footer.jsp" %>
 <script>

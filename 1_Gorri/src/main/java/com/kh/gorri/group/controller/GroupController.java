@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -91,12 +92,7 @@ public class GroupController {
 	public String groupDetailAdmin() {
 		return "group_Y_Admin"; 
 	}
-	
-	@RequestMapping(value="groupUpdate.gr")
-	public String groupUpdate() {
-		return "groupUpdate"; 
-	}
-	
+		
 	@RequestMapping("insertGroup.gr")
 	public String insertGroup(@ModelAttribute Group g,@ModelAttribute GroupMember gm,
 							  Model model, HttpServletRequest request,
@@ -222,53 +218,80 @@ public class GroupController {
 	}
 	
 	
-
+	
 	     
 	   //---------------------보서 : 2023-05-14 : 가입자일 때 모임 화면 
 	   @RequestMapping(value="groupDetailY.gr")
 	   public String groupDetailY() {	      
 	      return "redirect:selectGroupView.gr"; 
 	   }
+
 	   
-	   @RequestMapping(value="selectGroupView.gr")
-	   public String selectGroupView(@RequestParam(value="page", required=false) Integer currentPage, Model model) {
+	   @RequestMapping(value = "selectGroupView.gr")
+	   public String selectGroupView(
+	         @RequestParam("membershipNo") int membershipNo,
+	         @RequestParam(value = "page", required = false) Integer currentPage, Model model
+	         , HttpSession session) {
 	      
-	      ArrayList<Group> groups = gService.selectGroupView(1); //모임 별 화면 
-	      model.addAttribute("list", groups); 
+	      System.out.println("모임번호 : " + membershipNo);
 	      
-	      //boardList 가져오기 
-	      if( currentPage == null) { //값이 안 들어오면 
+	      //미가입자-가입자 화면 나누기 
+	      Member m = (Member)session.getAttribute("loginUser");
+	      String login = null;
+	      if( m != null) { 
+	         login = m.getUserId();
+	      }
+	      int checkStatus = gService.checkStatus(login, membershipNo); 
+	      
+	      //비관리자-관리자
+	      int checkAdmin = gService.checkAdmin(login, membershipNo);
+	      
+	      //membershipNo에 해당되는 화면 
+	      ArrayList<Group> groups = gService.selectGroupView(membershipNo); //지금 이게 0번으로 들어와서 그래...
+	      model.addAttribute("list", groups);
+	      
+	      // boardList 가져오기
+	      if (currentPage == null) { // 값이 안 들어오면
 	         currentPage = 1;
 	      }
-	      
-	      //행 개수 가져오기(인자는 수빈 언니 리스트 구현 후 수정)
-	      int listCount = gService.getListCount(1); 
-	      
+	      // 행 개수 가져오기
+	      int listCount = gService.getListCount(membershipNo);
 	      PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
-	      ArrayList<GroupBoard> boardList = gService.selectBoardList(pi, 1);
-	      System.out.println(boardList);
-	      if(boardList != null) {
+	      ArrayList<GroupBoard> boardList = gService.selectBoardList(pi, membershipNo);
+	      System.out.println("boardList : " + boardList);
+	      
+	      //페이지, 게시글, 미가입자/가입자, 비관리자/관리자 여부 
+	      if (boardList != null) {
 	         model.addAttribute("pi", pi);
-	         model.addAttribute("boardList", boardList);
+	         model.addAttribute("boardList", boardList); //게시글 
+	         model.addAttribute("status", checkStatus);
+	         model.addAttribute("adminStatus", checkAdmin);
 	         return "group_yJoin";
 	      } else {
-	         return "groupMain2"; //게시글 조회 실패 시 보여줄 화면 만들기 
+	         return "groupMain2"; // 게시글 조회 실패 시 보여줄 화면 만들기
 	      }
 	   }
 	   
-	   //---------------------보서 : 2023-05-14 : 모임 게시글 상세보기 
-	   @RequestMapping(value="groupDetailBoard.gr")
-	   public String groupDetailBoard(@ModelAttribute GroupBoard gb, @RequestParam("page") Integer page, Model model) {
-
+	// ---------------------보서 : 2023-05-14 : 모임 게시글 상세보기
+	   @RequestMapping(value = "groupDetailBoard.gr")
+	   public String groupDetailBoard(@RequestParam("boardNo") int boardNo,  @RequestParam("page") Integer page, Model model) {
+	      System.out.println("groupDetailBoard");
+	      //모임 글번호를 보내서 모임 번호에 일치하는 상세 글 조회 
+	      GroupBoard detailBoard = gService.selectDetailBoard(boardNo);
+	      //글번호에 맞는 조회 
+	      ArrayList<Attachment> gAttm = gService.selectAttm(boardNo);
+	      System.out.println("gAttm : " + gAttm);
 	      
-	      GroupBoard detailBoard = gService.selectDetailBoard(gb);
-	      if(detailBoard != null) {
+	      System.out.println("boardNo : " + boardNo);
+	      if (detailBoard != null) {
 	         model.addAttribute("list", detailBoard);
+	         model.addAttribute("gList", gAttm);
 	         return "detailBoardNotice";
 	      } else {
-	         return "groupMain2"; //게시글 상세 조회 실패 시 보여줄 화면 만들기 
+	         return "groupMain2"; // 게시글 상세 조회 실패 시 보여줄 화면 만들기
 	      }
 	   }
+
 	   
 	   // 관리자 모임 페이지
 	   @RequestMapping("adminMoim.gr")
@@ -346,6 +369,92 @@ public class GroupController {
 			} else {
 				throw new GroupException("멤버 추방에 실패했습니다.");
 			}
+		}
+		
+		
+		// 모임 수정
+		@RequestMapping(value="groupUpdate.gr")
+		public String groupUpdate(@RequestParam("membershipNo") int membershipNo, Model model) {
+			
+			Attachment a = gService.getGroupPic(membershipNo);
+			Group membership = gService.getGroupInfo(membershipNo);
+			System.out.println(membership);
+			
+			model.addAttribute("groupPic", a );
+			model.addAttribute("groupInfo", membership );
+			model.addAttribute("membershipNo", membershipNo);
+			return "groupUpdate"; 
+		}
+		
+		
+		// ---------------------보서 : 2023-05-15 : 모임 게시글 작성하기
+		// 상세 페이지에서 작성하기 버튼
+		@RequestMapping("groupBoardWrite.gr")
+		public String groupBoardWrite(@RequestParam(value = "page", required = false) Integer page,
+				@RequestParam("membershipNo") int groupNo, Model model) {
+
+			model.addAttribute("groupNo", groupNo);
+			model.addAttribute("page", page);
+
+			return "boardWrite"; // 글 작성 화면에서 데이터 쓰고 submit누르면
+		}
+
+		
+		
+		// 작성 공간에서 submit 클릭
+		@RequestMapping("insertBoard.gr")
+		public String groupBoardWrite(@ModelAttribute GroupBoard groupBoard, HttpServletRequest request,
+				@RequestParam(value = "page", required = false) Integer page,
+				@RequestParam("file") ArrayList<MultipartFile> file, Model model) {
+
+			int currentPage = 1;
+			if (page != null) {
+				currentPage = page;
+			}
+
+			String id = ((Member) request.getSession().getAttribute("loginUser")).getUserId();
+			groupBoard.setUsersId(id);
+			System.out.println("로그인계정 : " + id);
+
+			// 첨부파일
+			Attachment attachment = new Attachment();
+			ArrayList<Attachment> list = new ArrayList<>();
+			for (int i = 0; i < file.size(); i++) {
+				MultipartFile upload = file.get(i); // 내용이 빈 파일도 들어옴
+				// [MultipartFile[field="file", filename=짱구.png, contentType=image/png,
+				// size=1174898]]
+				if (upload != null && !upload.isEmpty()) { // 추가 파일이 있다면
+					String[] returnArr = saveFile(upload, request); // saveFile메소드에 넘겨 이름 변경/저장소에 저장
+
+					if (returnArr[1] != null) { // 내용이 있는 파일만 list에 담기
+						attachment.setSavePath(returnArr[0]); // 경로 변경
+						attachment.setOriginalName(upload.getOriginalFilename());
+						attachment.setRenameName(returnArr[1]); // 변경 이름 넣기
+						attachment.setAttmLevel(1);
+						attachment.setBoardType("모임");
+						attachment.setUserId(id);
+						list.add(attachment);
+					}
+				}
+			}
+			System.out.println("attachment : " + attachment);
+			System.out.println("groupBoard : " + groupBoard);
+
+			// -------------------------------------------글 insert
+			// GroupBoard - Attachment 각각 하나씩 저장
+			int result1 = gService.insertBoard(groupBoard); // 글 등록
+			System.out.println("result1 : " + result1);
+			// 최신 글번호 조회
+			int newBoardNo = gService.selectNewBoardNo(id);
+			System.out.println("특정 아이디의 최신 글 번호 조회 : " + newBoardNo);
+
+			int result2 = gService.insertGroupAttm(attachment); // 사진 등록
+			System.out.println("사진 추가 : " + result2);
+
+			System.out.println("그룹번호 : " + groupBoard.getGroupNo());
+			// 글 등록 직후 등록한 게시글 바로 볼 수 있도록 boardNo 넘기기
+			return "redirect:groupDetailBoard.gr?page=" + currentPage + "&boardNo=" + newBoardNo;
+
 		}
 		
 }

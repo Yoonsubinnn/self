@@ -99,16 +99,20 @@
 		<div class="album py-1 bg-light mar1">
 			<div class="container">
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-					<c:forEach begin="1" end="6">
+					<c:forEach begin="1" end="6" items="${ gList }" var="g">
 						<div class="col">
 							<div class="card shadow-sm">
-							<a href=""><img src="resources/assets/flower1.PNG" class="img-fluid"></a>
+								<c:forEach items="${ aList }" var="a">
+									<c:if test="${ g.membershipNo eq a.boardNo }">									
+										<a href=""><img src="${ contextPath }/resources/uploadFiles/${a.renameName}" class="img-fluid"></a>
+									</c:if>								
+								</c:forEach>
 								<div class="card-body">
 									<div class="sub-title">
-										<p class="title">모임명</p>
-										<small class="d-inline-block">모집중(4/99)</small>
+										<p class="title">${ g.membershipName }</p>
+										<small class="d-inline-block">회원 인원 : ${ g.capacity }</small>
 										<div class="d-flex justify-content-between align-items-center">
-											<small class="text-muted">Content</small>
+											<small class="text-muted">${ g.membershipContent }</small>
 										</div>
 									</div>
 								</div>
